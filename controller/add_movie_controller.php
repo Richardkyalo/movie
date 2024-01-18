@@ -14,7 +14,7 @@ class add_movie_controller extends add_movie{
     private $cover_type;
     private $path="../views/add_movie.php";
 
-    public function __construct($movie_name, $movie_description, $movie_url, $theatre_name, $hours, $minutes, $charge, $rating, $actor) {
+    public function __construct($movie_name, $movie_description, $movie_url, $theatre_name, $hours, $minutes, $charge, $rating, $actor, $cover) {
         $this->movie_name =$movie_name;
         $this->movie_description = $movie_description;
         $this->movie_url= $movie_url;
@@ -24,6 +24,7 @@ class add_movie_controller extends add_movie{
         $this->charge=$charge;
         $this->rating=$rating;
         $this->actor= $actor;
+        $this->cover= $cover;
 
     }
 
