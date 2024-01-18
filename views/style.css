@@ -1,0 +1,41 @@
+.main {
+    width: 100%;
+    background: url("./images/6.jpg");
+    background-position: center;
+}
+.minor{
+    text-align: center;
+}
+.foot {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8)50%, rgba(0, 0, 0, 0.8)50%);
+}
+.lin {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 17px;
+    color: #fff;
+}
+.icons {
+    text-align: center;
+}
+
+.icons a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.icons ion-icon {
+    color: #fff;
+    text-align: center;
+    font-size: 30px;
+    transition: 0.3s ease;
+}
+
+.icons ion-icon:hover {
+    color: #ff7200;
+}
+.button{
+    background: #ff7200;
+    border: none;
+    cursor: pointer;
+    transition: .4s ease;
+}
