@@ -12,7 +12,6 @@ if(isset($_POST['submit'])){
     $cover=$_FILES['image']['name'];
     $cover_size=$_FILES['image']['size'];
 
-    include '../middlewares/hellperFunctions.php';
     include '../classes/connect.php';
     include '../classes/admins/add_movie.php';
     include '../controller/add_movie_controller.php';
