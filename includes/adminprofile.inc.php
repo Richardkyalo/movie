@@ -1,4 +1,8 @@
 <?php
+ include "../classes/connect.php";
+ include "../classes/admins/adminprofile.db.php";
+ include "../controller/adminprofile.controller.php";
+ $email="";
 if (isset($_POST['submit'])) {
     $firstname = stripslashes(htmlspecialchars($_POST['firstname']));
     $secondname = stripslashes(htmlspecialchars($_POST['secondname']));
@@ -9,10 +13,7 @@ if (isset($_POST['submit'])) {
     $phone = stripslashes(htmlspecialchars($_POST['phone']));
     $email = stripslashes(htmlspecialchars($_POST['email']));
 
-    include "../classes/connect.php";
-    include "../classes/admins/adminprofile.db.php";
-    include "../controller/adminprofile.controller.php";
-
+   
     $update = new Adminprofile_controller(
         $firstname,
         $secondname,
@@ -24,4 +25,15 @@ if (isset($_POST['submit'])) {
         $email
     );
     $update->updateUser();
+    // Fetch updated user details
+    $adminProfileInstance = new adminprofile();
+    $userDetails = $adminProfileInstance->getUserDetails($email);
 }
+class profile {
+    public function getuserdata($email) {
+        $adminProfileInstance = new adminprofile();
+$userDetails = $adminProfileInstance->getUserDetails($email);
+return $userDetails;   
+    }
+}
+

@@ -46,11 +46,19 @@
 
 <body class="main">
     <?php 
-    session_start();
-    // // $adminProfileInstance = new adminprofile();
-    // // $userDetails = $adminProfileInstance->getUserDetails($email); //
+    session_start(); //
     include "adminnavbar.php";
     include("../includes/adminprofile.inc.php");
+    $data= new profile();
+    $data1= $data->getuserdata($_SESSION['email']);
+    // $data = $userDetails;
+    $fname= $data1['firstname'];
+    $secondname= $data1['secondname'];
+    $address=$data1['address'];
+    $town=$data1['town'];
+    $phone=$data1['phone'];
+    $street=$data1['street'];
+    $theatre=$data1['theatre'];
     $error = "";
     if (isset($_GET['error'])) {
         $error = $_GET['error'];
@@ -88,31 +96,31 @@
 
                     <div class="col-lg-3 col-md-3 col-sm-12">
                         <label for="firstname" class="form-label shadow-sm">First Name</label>
-                        <input type="text" class="form-control" name="firstname" placeholder="FirstName" >
+                        <input type="text" class="form-control" name="firstname" placeholder="FirstName" value=<?php echo htmlspecialchars($fname); ?>>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-12">
                         <label for="secondname" class="form-label shadow-sm">Second Name</label>
-                        <input type="text" class="form-control" name="secondname" placeholder="Second Name">
+                        <input type="text" class="form-control" name="secondname" placeholder="Second Name" value=<?php echo htmlspecialchars($secondname); ?>>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-12">
                         <label for="inputAddress" class="form-label shadow-sm">Address</label>
-                        <input type="text" class="form-control" name="address" placeholder="Address">
+                        <input type="text" class="form-control" name="address" placeholder="Address" value=<?php echo htmlspecialchars($address); ?>>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-12">
                         <label for="inputTown" class="form-label shadow-sm">Town / City</label>
-                        <input type="text" class="form-control" name="town" placeholder="Town">
+                        <input type="text" class="form-control" name="town" placeholder="Town" value=<?php echo htmlspecialchars($town); ?>>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-12">
                         <label for="inputStreet" class="form-label shadow-sm">Street</label>
-                        <input type="text" class="form-control" name="street" placeholder="Street">
+                        <input type="text" class="form-control" name="street" placeholder="Street" value=<?php echo htmlspecialchars($street); ?>>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-12">
                         <label for="inputZip" class="form-label shadow-sm">Theatre</label>
-                        <input type="text" class="form-control" name="theatre" placeholder="Theatre Name">
+                        <input type="text" class="form-control" name="theatre" placeholder="Theatre Name" value=<?php echo htmlspecialchars($theatre); ?>>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-12">
                         <label for="phone" class="form-label shadow-sm">Phone Number</label>
-                        <input type="number" class="form-control" name="phone" placeholder="Phone Number">
+                        <input type="number" class="form-control" name="phone" placeholder="Phone Number" value=<?php echo htmlspecialchars($phone); ?>>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-12" style="display: none;">
                         <label for="email" class="form-label shadow-sm">Email</label>
