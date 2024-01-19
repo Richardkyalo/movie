@@ -21,7 +21,16 @@ class Add_theatre_controller extends add_theatre
 
     private function emptyChecker()
     {
-        return !empty($this->theatre_name) && !empty($this->county) && !empty($this->town) && !empty($this->street) && !empty($this->seats) && !empty($this->image);
+        $response= "";
+        if(empty($this->theatre_name) && empty($this->county) && empty($this->town)
+         && empty($this->street) && empty($this->seats) && empty($this->image)
+        ){
+            $response=false;
+        }else{
+            $response= true;
+        }
+        return $response;
+
     }
 
     private function theatreExists()
@@ -31,7 +40,13 @@ class Add_theatre_controller extends add_theatre
 
     private function image_size($input)
     {
-        return $input <= 6000000; 
+        $response = "";
+        if ($input > 6000000) {
+            $response = false;
+        } else {
+            $response = true;
+        }
+        return $response;
     }
     
     private function uploadFile()
@@ -63,16 +78,22 @@ class Add_theatre_controller extends add_theatre
         if (!$this->theatreExists()) {
             header("Location: " . $this->path . "?error=Theatre already exists");
             exit();
-        }
+        }else {
 
         $uploadedFile = $this->uploadFile();
 
-        if ($uploadedFile !== false && $this->addtheatre($this->theatre_name, $this->county, $this->town, $this->street, $this->seats, $uploadedFile)) {
-            header("Location: ../views/admintheatres.php");
-            exit();
+        if ($uploadedFile) {
+            if ($this->addtheatre($this->theatre_name, $this->county, $this->town, $this->street, $this->seats, $uploadedFile)) {
+                header("Location: ../views/admintheatres.php");
+                exit();
+            } else {
+                header("Location: " . $this->path . "?error=Failed to add theatre");
+                exit();
+            }
         } else {
-            header("Location: ./addtheatres.php");
+            header("Location: " . $this->path . "?error=Failed to upload file");
             exit();
+        }
         }
     }
 }

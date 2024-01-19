@@ -45,8 +45,18 @@
 </style>
 
 <body class="main">
-    <?php
-    include "adminnavbar.php"
+    <?php 
+    session_start();
+    // // $adminProfileInstance = new adminprofile();
+    // // $userDetails = $adminProfileInstance->getUserDetails($email); //
+    include "adminnavbar.php";
+    include("../includes/adminprofile.inc.php");
+    $error = "";
+    if (isset($_GET['error'])) {
+        $error = $_GET['error'];
+    } else {
+        $error = "";
+    }
     ?>
     <div class="container-fluid align-content-center mt-4 px-5">
         <div class="row">
@@ -71,19 +81,22 @@
                         <h3>
                             PERSONAL DETAILS
                         </h3>
+                        <div>
+                            <p style="color:#ff7200;">*<?= $error ?></p>
+                        </div>
                     </div>
 
                     <div class="col-lg-3 col-md-3 col-sm-12">
                         <label for="firstname" class="form-label shadow-sm">First Name</label>
-                        <input type="text" class="form-control" name="firstname" placeholder="FirstName">
+                        <input type="text" class="form-control" name="firstname" placeholder="FirstName" >
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-12">
                         <label for="secondname" class="form-label shadow-sm">Second Name</label>
-                        <input type="text" class="form-control" name="lastname" placeholder="Second Name">
+                        <input type="text" class="form-control" name="secondname" placeholder="Second Name">
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-12">
                         <label for="inputAddress" class="form-label shadow-sm">Address</label>
-                        <input type="text" class="form-control" name="address1" placeholder="Address">
+                        <input type="text" class="form-control" name="address" placeholder="Address">
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-12">
                         <label for="inputTown" class="form-label shadow-sm">Town / City</label>
@@ -95,14 +108,18 @@
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-12">
                         <label for="inputZip" class="form-label shadow-sm">Theatre</label>
-                        <input type="text" class="form-control" name="zip" placeholder="Theatre Name">
+                        <input type="text" class="form-control" name="theatre" placeholder="Theatre Name">
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-12">
                         <label for="phone" class="form-label shadow-sm">Phone Number</label>
                         <input type="number" class="form-control" name="phone" placeholder="Phone Number">
                     </div>
+                    <div class="col-lg-3 col-md-3 col-sm-12" style="display: none;">
+                        <label for="email" class="form-label shadow-sm">Email</label>
+                        <input type="text" class="form-control" name="email" placeholder="Email" value="<?php echo $_SESSION['email']; ?>">
+                    </div>
                     <div class="col-lg-12">
-                        <input type="submit" name="Submit" value="Update" style="background-color: #ff7200;" class="btn shadow-sm text-dark">
+                        <input type="submit" name="submit" value="Update" style="background-color: #ff7200;" class="btn shadow-sm text-dark">
                     </div>
                 </form>
             </div>

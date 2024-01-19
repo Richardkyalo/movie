@@ -104,7 +104,7 @@
                             <label for="image">Add theatre display </label>
                         </div>
                         <div class="input-group mb-3">
-                        <input type="file" name="images[]" id="image" placeholder="add displays" accept="image/*" multiple>
+                        <input type="file" name="image" id="image" placeholder="add displays" accept="image/*" multiple>
                         </div>
                         <button class="button btn btn-block col-12" name="submit">ADD</button><br>
                     </div>
