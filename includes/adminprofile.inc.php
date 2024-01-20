@@ -2,7 +2,16 @@
  include "../classes/connect.php";
  include "../classes/admins/adminprofile.db.php";
  include "../controller/adminprofile.controller.php";
+ include "../controller/profile_controller.php";
  $email="";
+ if(isset($_POST["Submit"])){
+    $email = stripslashes(htmlspecialchars($_POST['email']));
+    $image=$_FILES['images']['name'];
+    $image_size=$_FILES['images']['size'];
+
+    $image_update= new profile_controller($email, $image, $image_size);
+     $update->updateUser();
+ }
 if (isset($_POST['submit'])) {
     $firstname = stripslashes(htmlspecialchars($_POST['firstname']));
     $secondname = stripslashes(htmlspecialchars($_POST['secondname']));
@@ -12,7 +21,8 @@ if (isset($_POST['submit'])) {
     $theatre = stripslashes(htmlspecialchars($_POST['theatre']));
     $phone = stripslashes(htmlspecialchars($_POST['phone']));
     $email = stripslashes(htmlspecialchars($_POST['email']));
-
+    $image=$_FILES['images']['name'];
+    $image_size=$_FILES['images']['size'];
    
     $update = new Adminprofile_controller(
         $firstname,
@@ -32,8 +42,14 @@ if (isset($_POST['submit'])) {
 class profile {
     public function getuserdata($email) {
         $adminProfileInstance = new adminprofile();
-$userDetails = $adminProfileInstance->getUserDetails($email);
-return $userDetails;   
+        $userDetails = $adminProfileInstance->getUserDetails($email);
+        return $userDetails;   
     }
 }
-
+class users {
+    public function getAllUserDetails() {
+        $allUserdetails= new adminprofile();
+        $users = $allUserdetails->getAllUsers();
+        return $users;
+    }
+}

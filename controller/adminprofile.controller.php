@@ -8,8 +8,18 @@ class Adminprofile_controller extends adminprofile {
     private $theatre;
     private $phone;
     private $email;
+    
 
-    public function __construct($firstname, $secondname, $address, $town, $street, $theatre, $phone, $email){
+    public function __construct(
+    $firstname,
+     $secondname, 
+     $address, 
+     $town, 
+     $street,
+     $theatre,
+     $phone,
+     $email,
+     ){
        $this->firstname=$firstname;
        $this->secondname=$secondname;
        $this->address=$address;
@@ -41,7 +51,29 @@ class Adminprofile_controller extends adminprofile {
         return $response;
 
     }
-    
+    private function image_size($input)
+    {
+        $response = "";
+        if ($input > 56) {
+            $response = false;
+        } else {
+            $response = true;
+        }
+        return $response;
+    }
+    private function uploadFile()
+    {
+        $tempFile = $_FILES['image']['tmp_name'];
+        $image_extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+        $newFileName = bin2hex(random_bytes(5)) . '.' . $image_extension;
+        $targetFile = "../views/images/" . $newFileName;
+
+        if (move_uploaded_file($tempFile, $targetFile)) {
+            return $newFileName;
+        } else {
+            return false;
+        }
+    }
 
     public function updateUser(){
         if($this->emptyChecker()==false){
@@ -57,6 +89,6 @@ class Adminprofile_controller extends adminprofile {
         header("Location:./adminprofile.php? error= successfuly updated your details.");
         }
  
-        
+        $uploadedFile = $this->uploadFile();
     }
 }

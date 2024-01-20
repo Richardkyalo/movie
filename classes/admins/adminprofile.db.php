@@ -9,6 +9,14 @@ class adminprofile extends database {
 
         return $userDetails;
     }
+
+    public function getAllUsers() {
+        $stmt = $this->connect()->prepare("SELECT * FROM users");
+        $stmt->execute();
+        $allUserDetails = $stmt->fetchALL(PDO::FETCH_ASSOC);
+        $stmt = null; // Close the statement to free up resources
+        return $allUserDetails;
+    }
     protected function updateUserDetails($firstname, $secondname, $address, $town, 
     $street, $theatre, $phone, $email) {
         $stmt = $this->connect()->prepare("UPDATE users SET firstname = ?, secondname = ?,
@@ -23,4 +31,19 @@ class adminprofile extends database {
 
         return $result;
     }
+    protected function updateUserProfile($profile, $email)
+    {
+        try {
+            $stmt = $this->connect()->prepare("UPDATE users SET firstname = ? WHERE email = ?");
+            $result = $stmt->execute([$profile, $email]);
+            $stmt = null; // Close the statement to free up resources
+            return $result;
+        } catch (PDOException $e) {
+            // Log the error or handle it appropriately
+            error_log("PDOException: " . $e->getMessage());
+            // Optionally, you can rethrow the exception to propagate it further
+            throw $e;
+        }
+    }
+    
 }

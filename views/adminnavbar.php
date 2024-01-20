@@ -7,6 +7,7 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="adminprofile.php">PROFILE</a></li>
+                <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="allusers.php">USERS</a></li>
                 <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="admintheatres.php">THEATRES</a></li>
                 <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="adminmovies.php">MOVIES</a></li>
                 <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="#">UPCOMING MOVIES</a></li>
