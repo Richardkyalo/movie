@@ -48,18 +48,7 @@
     <?php 
     session_start(); //
     include "adminnavbar.php";
-    include("../includes/adminprofile.inc.php");
-    $data= new profile();
-    $email = $_SESSION['email'];
-    $data1= $data->getuserdata($email);
-    // $data = $userDetails;
-    $fname= $data1['firstname'];
-    $secondname= $data1['secondname'];
-    $address=$data1['address'];
-    $town=$data1['town'];
-    $phone=$data1['phone'];
-    $street=$data1['street'];
-    $theatre=$data1['theatre'];
+    include("../includes/add_employee.inc.php");
     $error = "";
     if (isset($_GET['error'])) {
         $error = $_GET['error'];
@@ -96,39 +85,31 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-3 col-md-3 col-sm-12">
-                        <label for="firstname" class="form-label shadow-sm">First Name</label>
-                        <input type="text" class="form-control" name="firstname" placeholder="FirstName">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <label for="firstname" class="form-label shadow-sm">Role</label>
+                        <input type="text" class="form-control" name="role" placeholder="Employee" value="Employee" readonly style="color: black;">
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-12">
-                        <label for="secondname" class="form-label shadow-sm">Second Name</label>
-                        <input type="text" class="form-control" name="secondname" placeholder="Second Name" value=<?php echo htmlspecialchars($secondname); ?>>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <label for="secondname" class="form-label shadow-sm">First Name</label>
+                        <input type="text" class="form-control" name="firstname" placeholder="First Name">
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-12">
-                        <label for="inputAddress" class="form-label shadow-sm">Address</label>
-                        <input type="text" class="form-control" name="address" placeholder="Address" value=<?php echo htmlspecialchars($address); ?>>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <label for="inputAddress" class="form-label shadow-sm">Email</label>
+                        <input type="text" class="form-control" name="email" placeholder="Email" >
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-12">
-                        <label for="inputTown" class="form-label shadow-sm">Town / City</label>
-                        <input type="text" class="form-control" name="town" placeholder="Town" value=<?php echo htmlspecialchars($town); ?>>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <label for="inputTown" class="form-label shadow-sm">Password</label>
+                        <input type="text" class="form-control" name="password" placeholder="Password">
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-12">
-                        <label for="inputStreet" class="form-label shadow-sm">Street</label>
-                        <input type="text" class="form-control" name="street" placeholder="Street" value=<?php echo htmlspecialchars($street); ?>>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <label for="inputStreet" class="form-label shadow-sm">Theatre</label>
+                        <input type="text" class="form-control" name="theatre" placeholder="Theatre">
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-12">
-                        <label for="inputZip" class="form-label shadow-sm">Theatre</label>
-                        <input type="text" class="form-control" name="theatre" placeholder="Theatre Name" value=<?php echo htmlspecialchars($theatre); ?>>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <label for="inputZip" class="form-label shadow-sm">Phone</label>
+                        <input type="text" class="form-control" name="phone" placeholder="Phone">
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-12">
-                        <label for="phone" class="form-label shadow-sm">Phone Number</label>
-                        <input type="number" class="form-control" name="phone" placeholder="Phone Number" value=<?php echo htmlspecialchars($phone); ?>>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-12" style="display: none;">
-                        <label for="email" class="form-label shadow-sm">Email</label>
-                        <input type="text" class="form-control" name="email" placeholder="Email" value="<?php echo $_SESSION['email']; ?>">
-                    </div>
-                    <div class="col-lg-12">
+                    <div class="col-lg-12" style="text-align: right;">
                         <input type="submit" name="submit" value="Update" style="background-color: #ff7200;" class="btn shadow-sm text-dark">
                     </div>
                 </form>

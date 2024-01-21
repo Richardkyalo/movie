@@ -28,8 +28,19 @@
 <body class="main">
         <div class="row">
             <div class="col-12">
-                <?php
-                include "adminnavbar.php"
+            <?php
+                 session_start(); //
+                 include "adminnavbar.php";
+                 include("../includes/adminprofile.inc.php");
+                 $data= new users();
+                 $email = $_SESSION['email'];
+                 $users = $data->getAllUserDetails();
+                 $error = "";
+                 if (isset($_GET['error'])) {
+                     $error = $_GET['error'];
+                 } else {
+                     $error = "";
+                 }
                 ?>
             </div>
         </div>

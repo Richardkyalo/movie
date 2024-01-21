@@ -22,9 +22,7 @@ class Add_theatre_controller extends add_theatre
     private function emptyChecker()
     {
         $response= "";
-        if(empty($this->theatre_name) && empty($this->county) && empty($this->town)
-         && empty($this->street) && empty($this->seats) && empty($this->image)
-        ){
+        if(empty($this->theatre_name)||empty($this->county)||empty($this->town)||empty($this->street)||empty($this->seats)||empty($this->image)){
             $response=false;
         }else{
             $response= true;
@@ -65,7 +63,7 @@ class Add_theatre_controller extends add_theatre
 
     public function add_theatre()
     {
-        if (!$this->emptyChecker()) {
+        if ($this->emptyChecker()==false) {
             header("Location: " . $this->path . "?error=All fields are required");
             exit();
         }

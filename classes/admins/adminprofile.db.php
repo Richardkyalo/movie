@@ -17,6 +17,13 @@ class adminprofile extends database {
         $stmt = null; // Close the statement to free up resources
         return $allUserDetails;
     }
+    public function getAllTheatreDetails() {
+        $stmt = $this->connect()->prepare("SELECT * FROM theatres");
+        $stmt->execute();
+        $allTheatreDetails = $stmt->fetchALL(PDO::FETCH_ASSOC);
+        $stmt = null;
+        return $allTheatreDetails;
+    }
     protected function updateUserDetails($firstname, $secondname, $address, $town, 
     $street, $theatre, $phone, $email) {
         $stmt = $this->connect()->prepare("UPDATE users SET firstname = ?, secondname = ?,

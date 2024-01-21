@@ -53,3 +53,10 @@ class users {
         return $users;
     }
 }
+class theatres {
+    public function getAllTheatreDetails() {
+        $allTheatredetails= new adminprofile();
+        $users = $allTheatredetails->getAllTheatreDetails();
+        return $users;
+    }
+}

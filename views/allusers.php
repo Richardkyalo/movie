@@ -50,8 +50,11 @@
             </div>
         </div>
         <div class="row">
+            <br><br><br>
+        </div>
+        <div class="row">
             <div class="col-12">
-                <table class="table table-hover table-bordered mt-4">
+                <table class="table table-hover table-bordered" >
                     <thead>
                         <tr>
                             <th style="text-align: right;">#NUMBER</th>
