@@ -32,9 +32,9 @@
                  session_start(); //
                  include "adminnavbar.php";
                  include("../includes/adminprofile.inc.php");
-                 $data= new users();
+                 $data= new theatres();
                  $email = $_SESSION['email'];
-                 $users = $data->getAllUserDetails();
+                 $theatres = $data->getAllTheatreDetails();
                  $error = "";
                  if (isset($_GET['error'])) {
                      $error = $_GET['error'];
@@ -50,28 +50,45 @@
             </div>
         </div>
         <div class="row">
+            <br><br>
+        </div>
+        <div class="row">
             <div class="col-12">
                 <table class="table table-hover table-bordered mt-4">
                     <thead>
                         <tr>
-                            <th>SERIAL NUMBER</th>
-                            <th>THEATRE</th>
+                            <th style="text-align: right;">#NUMBER</th>
+                            <th>THEATRE NAME</th>
                             <th>SEATS</th>
                             <th>COUNTY</th>
                             <th>CITY/TOWN</th>
                             <th>ACTION</th>
                         </tr>
                     </thead>
+                    <?php
+                        if (!empty($theatres)) {
+                            $count=0;
+                            foreach ($theatres as $theatre) {
+                                ?>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td style="text-align: right;">
+                        <?php $count=$count+1;
+                                   echo $count;
+                                   ?>
+                        </td>
+                        <td><?php echo $theatre['theatre_name']?></td>
+                        <td><?php echo $theatre['seats']?></td>
+                        <td><?php echo $theatre['county']?></td>
+                        <td><?php echo $theatre['town']?></td>
                         <td>
                             <input type="submit" name="Submit" value="UPDATE" class="btn shadow-sm text-dark" style="background-color: #ff7200;">
                             <input type="submit" name="Submit" value="DELETE" class="btn shadow-sm text-dark" style="background-color: #ff7200;">
                         </td>
+                        <?php }
+                         } else {
+                      echo "No users found.";
+                        }
+                        ?>
                     </tr>
                 </table>
             </div>

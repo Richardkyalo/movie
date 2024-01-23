@@ -56,7 +56,7 @@ class users {
 class theatres {
     public function getAllTheatreDetails() {
         $allTheatredetails= new adminprofile();
-        $users = $allTheatredetails->getAllTheatreDetails();
-        return $users;
+        $theatres = $allTheatredetails->getAllTheatreDetails();
+        return $theatres;
     }
 }

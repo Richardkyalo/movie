@@ -16,7 +16,7 @@ class signup extends database{
     protected function createUser($email, $password){
         $stmt=$this->connect()->prepare("INSERT INTO users(email,passwords, roles) values(?,?,?);");
         $hasshed_password= password_hash($password, PASSWORD_DEFAULT);
-        $roles="admin";
+        $roles="customer";
         if($stmt->execute(array($email,$hasshed_password,$roles))){
             $stmt=null;
             header("Location: ../views/login.php");

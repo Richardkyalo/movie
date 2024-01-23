@@ -28,6 +28,12 @@
         color: #fff;
         font-family: sans-serif;
     }
+    .textarea {
+            width: 100%;
+            max-width: 500px; /* Set a maximum width if needed */
+            height: 150px; /* Set an initial height */
+            resize: vertical; /* Allow vertical resizing */
+        }
 
     h3 {
         font-family: sans-serif;
@@ -46,11 +52,13 @@
 </style>
 
 <body class="main">
-    <div class="row">
+    <div>
         <div class="col-12">
             <?php
             include "adminnavbar.php";
             include("../includes/add_movie.inc.php");
+            $data = new theatres();
+            $theatres = $data->getAllTheatreDetails();
             $error = "";
             if (isset($_GET['error'])) {
                 $error = $_GET['error'];
@@ -60,11 +68,13 @@
             ?>
         </div>
     </div>
-    <div class="row mt-5">
-        <div class="col-lg-3 col-md-3"></div>
-        <div class="col-lg-6 col-md-6">
+    <br><br>
+    <div class="container-fluid position-relative align-content-center mt-5">
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-12"></div>
+        <div class="col-lg-8 col-md-8 col-sm-12">
             <div class="row">
-                <form action="" method="post" enctype="multipart/form-data">
+                <form action="" method="post" enctype="multipart/form-data" id="checkBoxForm">
                     <div class="form">
                         <h3>ADD MOVIE</h3><br>
                         <div>
@@ -77,11 +87,28 @@
                             <p style="color:#ff7200;">*<?= $error ?></p>
                         </div>
                         <p style="color: #ff7200;">Choose Theatres</p>
-                        <div class="mb-3">
-                            <input name="theatres" type="checkbox" value="" id="theatres" style="color: #ff7200;" />
-                            <label for="theartres" class="">theatre1</label>
-                            <input type="date" placeholder="">
-                            <input type="time">
+                        <div class="row mb-3">
+                            <?php
+                            if (!empty($theatres)) {
+                                $count = 0;
+                                foreach ($theatres as $theatre) {
+                            ?>
+                                    <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <input name="theatres[]" type="checkbox" value="<?php echo $theatre['theatre_name'] ?>" id="theatres" style="color: #ff7200;" />
+                                    <label for="theartres" class=""><?php echo $theatre['theatre_name'] ?></label>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <input name="date[]" type="date">
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <input name="time[]" type="time" ><br>
+                                    </div>
+                            <?php
+                                }
+                            } else {
+                                echo "No theatres found.";
+                            }
+                            ?>
                         </div><br>
                         <div>
                             <p style="color:#ff7200;">*<?= $error ?></p>
@@ -103,11 +130,11 @@
                         <p style="color: #ff7200;">Charges of the Movie</p>
                         <div class="input-group mb-3">
                             <div class="col-lg-3 col-md-3 col-sm-3">
-                            <input name="charge" type="number" value="" class="input form-control" id="" placeholder="Charges" aria-label="street" aria-describedby="basic-addon1" />
+                                <input name="charge" type="number" value="" class="input form-control" id="" placeholder="Charges" aria-label="street" aria-describedby="basic-addon1" />
                             </div>
                             <div class="col-lg-3 col-md-3 col-sm-3"></div>
                             <div class="col-lg-3 col-md-3 col-sm-3">
-                            <input name="rating" type="number" value="" class="input form-control" id="" placeholder="Rating" aria-label="street" aria-describedby="basic-addon1" />
+                                <input name="rating" type="number" value="" class="input form-control" id="" placeholder="Rating" aria-label="street" aria-describedby="basic-addon1" />
                             </div>
                         </div><br>
                         <div>
@@ -117,8 +144,8 @@
                             <label for="actor">Main Actor</label>
                         </div>
                         <div class="input-group mb-3">
-                        <input name="actor" type="text" value="" class="input form-control" id="" placeholder="Actor" aria-label="street" aria-describedby="basic-addon1"/>
-                    </div>
+                            <input name="actor" type="text" value="" class="input form-control" id="" placeholder="Actor" aria-label="street" aria-describedby="basic-addon1" />
+                        </div>
                         <div>
                             <p style="color:#ff7200;">*<?= $error ?></p>
                         </div>
@@ -127,7 +154,7 @@
                                 <label for="comment">Movie Description</label>
                             </div>
                             <div class="col-lg-12 col-md-12 col-sm-12">
-                            <textarea id="comment" name="movie_description" rows="" cols="" placeholder="Enter movie description here"></textarea>
+                                <textarea class="textarea" name="movie_description" placeholder="Enter movie description here"></textarea>
                             </div>
                         </div>
                         <div>
@@ -137,14 +164,40 @@
                             <label for="image">Add Movie Cover Pictures</label>
                         </div>
                         <div class="input-group mb-3">
-                        <input type="file" name="image" id="image" placeholder="add displays">
+                            <input type="file" name="image" id="image" placeholder="add displays">
                         </div>
-                        <button class="button btn btn-block col-12" name="submit">ADD</button><br>
+                        <div>
+                            <p id="message" style="color: #ff7200;"></p>
+                        </div>
+                        <button class="button btn btn-block col-12" type="submit" name="submit">ADD</button><br>
                     </div>
                 </form>
+                <script>
+                    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                    var form = document.getElementById('checkBoxForm');
+                    var message = document.getElementById('message');
+
+                    form.addEventListener('submit', function(event) {
+                        var checkedCount = 0;
+
+                        checkboxes.forEach(function(checkbox) {
+                            if (checkbox.checked) {
+                                checkedCount++;
+                            }
+                        });
+
+                        if (checkedCount !== 3) {
+                            event.preventDefault();
+                            message.textContent = '*****Please select exactly 3 checkboxes for three theatres******';
+                        } else {
+                            message.textContent = '';
+                        }
+                    });
+                </script>
             </div>
         </div>
-        <div class="col-lg-3 col-md-3"></div>
+        <div class="col-lg-2 col-md-2 col-sm-12"></div>
+    </div>
     </div>
     <div class="row">
         <div class="col-12">
