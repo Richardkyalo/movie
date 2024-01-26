@@ -86,7 +86,7 @@
                         </td>
                         <?php }
                          } else {
-                      echo "No users found.";
+                      echo "No theatres found.";
                         }
                         ?>
                     </tr>

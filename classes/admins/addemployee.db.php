@@ -29,4 +29,12 @@ class Add_employee extends database{
         }
 
     }
+    public function getAllTheatreDetails()
+    {
+        $stmt = $this->connect()->prepare("SELECT * FROM theatres");
+        $stmt->execute();
+        $allTheatreDetails = $stmt->fetchALL(PDO::FETCH_ASSOC);
+        $stmt = null;
+        return $allTheatreDetails;
+    }
 }

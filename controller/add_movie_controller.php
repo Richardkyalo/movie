@@ -2,15 +2,7 @@
 class add_movie_controller extends add_movie
 {
     private $movie_name;
-    private $selectedTheatre1;
-    private $selectedTheatre2;
-    private $selectedTheatre3;
-    private $selectedDates1;
-    private $selectedDates2;
-    private $selectedDates3;
-    private $selectedTimes1;
-    private $selectedTimes2;
-    private $selectedTimes3;
+
     private $hours;
     private $minutes;
     private $charge;
@@ -18,6 +10,9 @@ class add_movie_controller extends add_movie
     private $actor;
     private $movie_description;
     private $cover;
+    private $theatre;
+    private $date;
+    private $time;
     private $cover_size;
     private $path = "../views/add_movie.php";
 
@@ -30,15 +25,9 @@ class add_movie_controller extends add_movie
         $rating,
         $actor,
         $cover,
-        $selectedTheatre1,
-        $selectedDates1,
-        $selectedTimes1,
-        $selectedTheatre2,
-        $selectedDates2,
-        $selectedTimes2,
-        $selectedtheatre3,
-        $selectedDates3,
-        $selectedTimes3,
+        $theatre,
+        $date,
+        $time
     ) {
         $this->movie_name = $movie_name;
         $this->movie_description = $movie_description;
@@ -47,17 +36,10 @@ class add_movie_controller extends add_movie
         $this->charge = $charge;
         $this->rating = $rating;
         $this->actor = $actor;
+        $this->theatre= $theatre;
+        $this->date = $date;
+        $this->time = $time;
         $this->cover = $cover;
-        $this->selectedTheatre1 = $selectedTheatre1;
-        $this->selectedDates1 = $selectedDates1;
-        $this->selectedTimes1 = $selectedTimes1;
-        $this->selectedTheatre2 = $selectedTheatre2;
-        $this->selectedDates2 = $selectedDates2;
-        $this->selectedTimes2 = $selectedTimes2;
-        $this->selectedTheatre3 = $selectedtheatre3;
-        $this->selectedDates3 = $selectedDates3;
-        $this->selectedTimes3 = $selectedTimes3;
-
     }
 
     public function rating()
@@ -115,17 +97,11 @@ class add_movie_controller extends add_movie
                 $this->rating,
                 $this->actor,
                 $this->cover,
-                $this->selectedTheatre1,
-                $this->selectedDates1,
-                $this->selectedTimes1,
-                $this->selectedTheatre2,
-                $this->selectedDates2,
-                $this->selectedTimes2,
-                $this->selectedTheatre3,
-                $this->selectedDates3,
-                $this->selectedTimes3
+                $this->theatre,
+                $this->date,
+                $this->time
             );
-            header("Location: ../views/adminmovies.php");
+            header("Location: ../views/adminmovies.php ? error=");
             exit();
         }
     }

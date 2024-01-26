@@ -55,10 +55,13 @@
     <div>
         <div class="col-12">
             <?php
+            session_start();    
             include "adminnavbar.php";
             include("../includes/add_movie.inc.php");
-            $data = new theatres();
-            $theatres = $data->getAllTheatreDetails();
+            $data= new profile();
+            $email = $_SESSION['email'];
+            $data1= $data->getuserdata($email);
+            $theatre=$data1['theatre'];
             $error = "";
             if (isset($_GET['error'])) {
                 $error = $_GET['error'];
@@ -88,27 +91,15 @@
                         </div>
                         <p style="color: #ff7200;">Choose Theatres</p>
                         <div class="row mb-3">
-                            <?php
-                            if (!empty($theatres)) {
-                                $count = 0;
-                                foreach ($theatres as $theatre) {
-                            ?>
-                                    <div class="col-lg-4 col-md-4 col-sm-12">
-                                    <input name="theatres[]" type="checkbox" value="<?php echo $theatre['theatre_name'] ?>" id="theatres" style="color: #ff7200;" />
-                                    <label for="theartres" class=""><?php echo $theatre['theatre_name'] ?></label>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-12">
-                                    <input name="date[]" type="date">
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-12">
-                                    <input name="time[]" type="time" ><br>
-                                    </div>
-                            <?php
-                                }
-                            } else {
-                                echo "No theatres found.";
-                            }
-                            ?>
+                            <div class="col col-md-4 colo-lg-4 col-sm-12">
+                                <input name="theatre" class="form-control" type="text" value="<?php echo $theatre?>" readonly style="color: black;" >
+                            </div>
+                            <div class="col col-md-4 colo-lg-4 col-sm-12">
+                                <input type="date" name="date">
+                            </div>
+                            <div class="col col-md-4 colo-lg-4 col-sm-12">
+                                <input type="time" name="time">
+                            </div>
                         </div><br>
                         <div>
                             <p style="color:#ff7200;">*<?= $error ?></p>
@@ -172,28 +163,6 @@
                         <button class="button btn btn-block col-12" type="submit" name="submit">ADD</button><br>
                     </div>
                 </form>
-                <script>
-                    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-                    var form = document.getElementById('checkBoxForm');
-                    var message = document.getElementById('message');
-
-                    form.addEventListener('submit', function(event) {
-                        var checkedCount = 0;
-
-                        checkboxes.forEach(function(checkbox) {
-                            if (checkbox.checked) {
-                                checkedCount++;
-                            }
-                        });
-
-                        if (checkedCount !== 3) {
-                            event.preventDefault();
-                            message.textContent = '*****Please select exactly 3 checkboxes for three theatres******';
-                        } else {
-                            message.textContent = '';
-                        }
-                    });
-                </script>
             </div>
         </div>
         <div class="col-lg-2 col-md-2 col-sm-12"></div>

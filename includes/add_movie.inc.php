@@ -2,9 +2,6 @@
 include '../classes/connect.php';
 include '../classes/admins/add_movie.php';
 include '../controller/add_movie_controller.php';
-$selectedTheatres = [];
-$selectedDates = [];
-$selectedTimes = [];
 if (isset($_POST['submit'])) {
     $movie_name = stripslashes(htmlspecialchars($_POST['movie_name']));
     $movie_description = stripslashes(htmlspecialchars($_POST['movie_description']));
@@ -13,26 +10,15 @@ if (isset($_POST['submit'])) {
     $charge = stripslashes(htmlspecialchars($_POST['charge']));
     $rating = stripslashes(htmlspecialchars($_POST['rating']));
     $actor = stripslashes(htmlspecialchars($_POST['actor']));
+    $theatre=stripslashes(htmlspecialchars($_POST['theatre']));
+    $date=stripslashes(htmlspecialchars($_POST['date']));
+    $time=stripslashes(htmlspecialchars($_POST['time']));
     $cover = $_FILES['image']['name'];
 
-    $selectedTheatres = $_POST['theatres'];
-    $selectedDates = $_POST['date'];
-    $selectedTimes = $_POST['time'];
+    // $selectedTheatres = $_POST['theatres'];
+    // $selectedDates = $_POST['date'];
+    // $selectedTimes = $_POST['time'];
     $cover_size = $_FILES['image']['size'];
-
-    $selectedDates1Formatted = date('Y-m-d', strtotime($selectedDates1));
-$selectedTimes1Formatted = date('H:i:s', strtotime($selectedTimes1));
-
-
-    $selectedTheatre1=$selectedTheatres[0];
-    $selectedDates1= date('Y-m-d',strtotime($selectedDates[0]));
-    $selectedTimes1= date('H:i:s', strtotime($selectedTimes[0]));
-    $selectedTheatre2= $selectedTheatres[1];
-    $selectedDates2= date('Y-m-d',strtotime($selectedDates[1]));
-    $selectedTimes2=date('H:i:s', strtotime($selectedTimes[1]));
-    $selectedtheatre3= $selectedTheatres[2];
-    $selectedDates3=date('Y-m-d',strtotime($selectedDates[2]));
-    $selectedTimes3= date('H:i:s', strtotime($selectedTimes[2]));
 
 
     $add_movie = new add_movie_controller(
@@ -44,24 +30,23 @@ $selectedTimes1Formatted = date('H:i:s', strtotime($selectedTimes1));
         $rating,
         $actor,
         $cover,
-        $selectedTheatre1,
-        $selectedDates1,
-        $selectedTimes1,
-        $selectedTheatre2,
-        $selectedDates2,
-        $selectedTimes2,
-        $selectedtheatre3,
-        $selectedDates3,
-        $selectedTimes3
+        $theatre,
+        $date,
+        $time
     );
     $add_movie->add_movie();
 }
-class theatres
-{
-    public function getAllTheatreDetails()
-    {
-        $allTheatredetails = new add_movie();
-        $theatres = $allTheatredetails->getAllTheatreDetails();
-        return $theatres;
+class profile {
+    public function getuserdata($email) {
+        $adminProfileInstance = new add_movie();
+        $userDetails = $adminProfileInstance->getUserDetails($email);
+        return $userDetails;   
+    }
+}
+class movies {
+    public function get_movies() {
+        $movie = new add_movie();
+        $movies = $movie->get_all_movies();
+        return $movies;
     }
 }

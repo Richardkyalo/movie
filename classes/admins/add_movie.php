@@ -10,22 +10,15 @@ class add_movie extends database
         $rating,
         $actor,
         $cover,
-        $selectedTheatre1,
-        $selectedDates1,
-        $selectedTimes1,
-        $selectedTheatre2,
-        $selectedDates2,
-        $selectedTimes2,
-        $selectedtheatre3,
-        $selectedDates3,
-        $selectedTimes3
+        $theatre,
+        $date,
+        $time
     ) {
         $stmt = $this->connect()->prepare("INSERT INTO movies(movie, movie_description, Length_hours, Length_minutes, charge, rating, actor, cover,
-        selectedtheatre1, selecteddate1, selectedtime1, selectedtheatre2, selecteddate2, selectedtime2, selectedtheatre3, 
-        selecteddate3, selectedtime3)
-        values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-        if ($stmt->execute(array($movie_name, $movie_description, $hours, $minutes, $charge, $rating, $actor, $cover, $selectedTheatre1, $selectedDates1,
-        $selectedTimes1, $selectedTheatre2, $selectedDates2, $selectedTimes2, $selectedtheatre3, $selectedDates3, $selectedTimes3))) {
+        theatre, date, time
+       )
+        values(?,?,?,?,?,?,?,?,?,?,?)");
+        if ($stmt->execute(array($movie_name, $movie_description, $hours, $minutes, $charge, $rating, $actor, $cover, $theatre, $date, $time))) {
             $stmt = null;
             return true;
         } else {
@@ -33,12 +26,20 @@ class add_movie extends database
             return false;
         }
     }
-    public function getAllTheatreDetails()
-    {
-        $stmt = $this->connect()->prepare("SELECT * FROM theatres");
-        $stmt->execute();
-        $allTheatreDetails = $stmt->fetchALL(PDO::FETCH_ASSOC);
-        $stmt = null;
-        return $allTheatreDetails;
+    public function getUserDetails($email) {
+        $stmt = $this->connect()->prepare("SELECT firstname, secondname, address, town, street, theatre, phone, email FROM users WHERE email = ?");
+        $stmt->execute([$email]);
+        $userDetails = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt = null; // Close the statement to free up resources
+
+        return $userDetails;
     }
+    public function get_all_movies() {
+        $stmt = $this->connect()->prepare("SELECT * FROM movies");
+        $stmt->execute();
+        $all_movies = $stmt->fetchALL(PDO::FETCH_ASSOC);
+        $stmt = null;
+        return $all_movies;
+    }
+
 }

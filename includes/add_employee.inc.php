@@ -1,4 +1,8 @@
 <?php
+
+include "../classes/connect.php";
+include "../classes/admins/addemployee.db.php";
+include "../controller/add_employee_controller.php";
 if(isset($_POST["submit"])){
     $role=stripslashes(htmlspecialchars($_POST["role"]));
     $firstname=stripslashes(htmlspecialchars($_POST["firstname"]));
@@ -7,10 +11,16 @@ if(isset($_POST["submit"])){
     $theatre=stripslashes(htmlspecialchars($_POST["theatre"]));
     $phone=stripslashes(htmlspecialchars($_POST["phone"]));
 
-    include "../classes/connect.php";
-    include "../classes/admins/addemployee.db.php";
-    include "../controller/add_employee_controller.php";
     
     $addemployee= new add_employee_controller($role, $firstname, $email, $password, $theatre, $phone);
     $addemployee-> add_employee();
+}
+class theatres
+{
+    public function getAllTheatreDetails()
+    {
+        $allTheatredetails = new Add_employee();
+        $theatres = $allTheatredetails->getAllTheatreDetails();
+        return $theatres;
+    }
 }

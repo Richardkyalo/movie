@@ -30,7 +30,18 @@
         <div class="row">
             <div class="col-12">
                 <?php
-                include "adminnavbar.php"
+                session_start(); //
+                include "adminnavbar.php";
+                include("../includes/add_movie.inc.php");
+                $data= new movies();
+                $email = $_SESSION['email'];
+                $movies = $data->get_movies();
+                $error = "";
+                if (isset($_GET['error'])) {
+                    $error = $_GET['error'];
+                } else {
+                    $error = "";
+                }
                 ?>
             </div>
         </div>
@@ -45,25 +56,41 @@
             <div class="col-12">
                 <table class="table table-hover table-bordered mt-4">
                     <thead>
+
                         <tr>
-                            <th>SERIAL NUMBER</th>
-                            <th>THEATRE</th>
-                            <th>SEATS</th>
-                            <th>COUNTY</th>
-                            <th>CITY/TOWN</th>
+                            <th style="text-align: right;">SERIAL NUMBER</th>
+                            <th>MOVIE NAME</th>
+                            <th>LENGTH</th>
+                            <th>CHARGE</th>
+                            <th>DATE</th>
                             <th>ACTION</th>
                         </tr>
                     </thead>
+                    <?php
+                        if (!empty($movies)) {
+                            $count=0;
+                            foreach ($movies as $movie) {
+                                ?>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                    <td style="text-align: right;">
+                        <?php $count=$count+1;
+                                   echo $count;
+                                   ?>
+                        </td>
+                        <td><?php echo $movie['movie']?></td>
+                        <td><?php echo $movie['length_hours']." HRS ".$movie['length_minutes']." MINS"?></td>
+                        <td><?php echo $movie['charge']?></td>
+                        <td><?php echo $movie['date']?></td>
                         <td>
                             <input type="submit" name="Submit" value="UPDATE" class="btn shadow-sm text-dark" style="background-color: #ff7200;">
                             <input type="submit" name="Submit" value="DELETE" class="btn shadow-sm text-dark" style="background-color: #ff7200;">
                         </td>
+                        
+                        <?php }
+                         } else {
+                      echo "No Movies found.";
+                        }
+                        ?>
                     </tr>
                 </table>
             </div>
