@@ -28,12 +28,16 @@
         color: #fff;
         font-family: sans-serif;
     }
+
     .textarea {
-            width: 100%;
-            max-width: 500px; /* Set a maximum width if needed */
-            height: 150px; /* Set an initial height */
-            resize: vertical; /* Allow vertical resizing */
-        }
+        width: 100%;
+        max-width: 500px;
+        /* Set a maximum width if needed */
+        height: 150px;
+        /* Set an initial height */
+        resize: vertical;
+        /* Allow vertical resizing */
+    }
 
     h3 {
         font-family: sans-serif;
@@ -55,13 +59,13 @@
     <div>
         <div class="col-12">
             <?php
-            session_start();    
+            session_start();
             include "adminnavbar.php";
             include("../includes/add_movie.inc.php");
-            $data= new profile();
+            $data = new profile();
             $email = $_SESSION['email'];
-            $data1= $data->getuserdata($email);
-            $theatre=$data1['theatre'];
+            $data1 = $data->getuserdata($email);
+            $theatre = $data1['theatre'];
             $error = "";
             if (isset($_GET['error'])) {
                 $error = $_GET['error'];
@@ -73,100 +77,100 @@
     </div>
     <br><br>
     <div class="container-fluid position-relative align-content-center mt-5">
-    <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-12"></div>
-        <div class="col-lg-8 col-md-8 col-sm-12">
-            <div class="row">
-                <form action="" method="post" enctype="multipart/form-data" id="checkBoxForm">
-                    <div class="form">
-                        <h3>ADD MOVIE</h3><br>
-                        <div>
-                            <p style="color:#ff7200;">*<?= $error ?></p>
-                        </div>
-                        <div class="input-group mb-3">
-                            <input name="movie_name" type="text" value="" class="input form-control" id="" placeholder="Movie Name" aria-label="Username" aria-describedby="basic-addon1" />
-                        </div><br>
-                        <div>
-                            <p style="color:#ff7200;">*<?= $error ?></p>
-                        </div>
-                        <p style="color: #ff7200;">Choose Theatres</p>
-                        <div class="row mb-3">
-                            <div class="col col-md-4 colo-lg-4 col-sm-12">
-                                <input name="theatre" class="form-control" type="text" value="<?php echo $theatre?>" readonly style="color: black;" >
-                            </div>
-                            <div class="col col-md-4 colo-lg-4 col-sm-12">
-                                <input type="date" name="date">
-                            </div>
-                            <div class="col col-md-4 colo-lg-4 col-sm-12">
-                                <input type="time" name="time">
-                            </div>
-                        </div><br>
-                        <div>
-                            <p style="color:#ff7200;">*<?= $error ?></p>
-                        </div>
-                        <p style="color: #ff7200;">Length of the Movie</p>
-                        <div class="input-group mb-3">
-                            <div class="col-lg-3 col-md-3 col-sm-3">
-                                <input name="hours" type="number" value="" class="input form-control" id="" placeholder="" aria-label="" aria-describedby="basic-addon1" />
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-3" style="color:#ff7200;">Hrs</div>
-                            <div class="col-lg-3 col-md-3 col-sm-3">
-                                <input name="minutes" type="number" value="" class="input form-control" id="" placeholder="" aria-label="" aria-describedby="basic-addon1" />
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-3" style="color:#ff7200;">Minutes</div>
-                        </div><br>
-                        <div>
-                            <p style="color:#ff7200;">*<?= $error ?></p>
-                        </div>
-                        <p style="color: #ff7200;">Charges of the Movie</p>
-                        <div class="input-group mb-3">
-                            <div class="col-lg-3 col-md-3 col-sm-3">
-                                <input name="charge" type="number" value="" class="input form-control" id="" placeholder="Charges" aria-label="street" aria-describedby="basic-addon1" />
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-3"></div>
-                            <div class="col-lg-3 col-md-3 col-sm-3">
-                                <input name="rating" type="number" value="" class="input form-control" id="" placeholder="Rating" aria-label="street" aria-describedby="basic-addon1" />
-                            </div>
-                        </div><br>
-                        <div>
-                            <p style="color:#ff7200;">*<?= $error ?></p>
-                        </div>
-                        <div class="input-group mb-3">
-                            <label for="actor">Main Actor</label>
-                        </div>
-                        <div class="input-group mb-3">
-                            <input name="actor" type="text" value="" class="input form-control" id="" placeholder="Actor" aria-label="street" aria-describedby="basic-addon1" />
-                        </div>
-                        <div>
-                            <p style="color:#ff7200;">*<?= $error ?></p>
-                        </div>
-                        <div class="input-group mb-3">
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-12"></div>
+            <div class="col-lg-8 col-md-8 col-sm-12">
+                <div class="row">
+                    <form action="" method="post" enctype="multipart/form-data"  onsubmit="return checkDateValidity();">
+                        <div class="form">
+                            <h3>ADD MOVIE</h3><br>
                             <div>
-                                <label for="comment">Movie Description</label>
+                                <p style="color:#ff7200;">*<?= $error ?></p>
                             </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12">
-                                <textarea class="textarea" name="movie_description" placeholder="Enter movie description here"></textarea>
+                            <div class="input-group mb-3">
+                                <input name="movie_name" type="text" value="" class="input form-control" id="" placeholder="Movie Name" aria-label="Username" aria-describedby="basic-addon1" />
+                            </div><br>
+                            <div>
+                                <p style="color:#ff7200;">*<?= $error ?></p>
                             </div>
+                            <p style="color: #ff7200;">Choose Theatres</p>
+                            <div class="row mb-3">
+                                <div class="col col-md-4 colo-lg-4 col-sm-12">
+                                    <input name="theatre" class="form-control" type="text" value="<?php echo $theatre ?>" readonly style="color: black;">
+                                </div>
+                                <div class="col col-md-4 colo-lg-4 col-sm-12">
+                            <div id="dateErrorMessage" style="color: #ff7200;"></div>
+                                    <input type="date" name="date">
+                                </div>
+                                <div class="col col-md-4 colo-lg-4 col-sm-12">
+                                    <input type="time" name="time">
+                                </div>
+                            </div><br>
+                            <div>
+                                <p style="color:#ff7200;">*<?= $error ?></p>
+                            </div>
+                            <p style="color: #ff7200;">Length of the Movie</p>
+                            <div class="input-group mb-3">
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <input name="hours" type="number" value="" class="input form-control" id="" placeholder="" aria-label="" aria-describedby="basic-addon1" />
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3" style="color:#ff7200;">Hrs</div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <input name="minutes" type="number" value="" class="input form-control" id="" placeholder="" aria-label="" aria-describedby="basic-addon1" />
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3" style="color:#ff7200;">Minutes</div>
+                            </div><br>
+                            <div>
+                                <p style="color:#ff7200;">*<?= $error ?></p>
+                            </div>
+                            <p style="color: #ff7200;">Charges of the Movie</p>
+                            <div class="input-group mb-3">
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <input name="charge" type="number" value="" class="input form-control" id="" placeholder="Charges" aria-label="street" aria-describedby="basic-addon1" />
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3"></div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <input name="rating" type="number" value="" class="input form-control" id="" placeholder="Rating" aria-label="street" aria-describedby="basic-addon1" />
+                                </div>
+                            </div><br>
+                            <div>
+                                <p style="color:#ff7200;">*<?= $error ?></p>
+                            </div>
+                            <div class="input-group mb-3">
+                                <label for="actor">Main Actor</label>
+                            </div>
+                            <div class="input-group mb-3">
+                                <input name="actor" type="text" value="" class="input form-control" id="" placeholder="Actor" aria-label="street" aria-describedby="basic-addon1" />
+                            </div>
+                            <div>
+                                <p style="color:#ff7200;">*<?= $error ?></p>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div>
+                                    <label for="comment">Movie Description</label>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <textarea class="textarea" name="movie_description" placeholder="Enter movie description here"></textarea>
+                                </div>
+                            </div>
+                            <div>
+                                <p style="color:#ff7200;">*<?= $error ?></p>
+                            </div>
+                            <div class="input-group mb-3">
+                                <label for="image">Add Movie Cover Pictures</label>
+                            </div>
+                            <div class="input-group mb-3">
+                                <input type="file" name="image" id="image" placeholder="add displays">
+                            </div>
+                            <div>
+                            </div>
+                            <button class="button btn btn-block col-12" type="submit" name="submit">ADD</button><br>
                         </div>
-                        <div>
-                            <p style="color:#ff7200;">*<?= $error ?></p>
-                        </div>
-                        <div class="input-group mb-3">
-                            <label for="image">Add Movie Cover Pictures</label>
-                        </div>
-                        <div class="input-group mb-3">
-                            <input type="file" name="image" id="image" placeholder="add displays">
-                        </div>
-                        <div>
-                            <p id="message" style="color: #ff7200;"></p>
-                        </div>
-                        <button class="button btn btn-block col-12" type="submit" name="submit">ADD</button><br>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
+            <div class="col-lg-2 col-md-2 col-sm-12"></div>
         </div>
-        <div class="col-lg-2 col-md-2 col-sm-12"></div>
-    </div>
     </div>
     <div class="row">
         <div class="col-12">
@@ -176,6 +180,46 @@
         </div>
     </div>
     </div>
+
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get the current date in the format YYYY-MM-DD
+        var currentDate = new Date().toISOString().split('T')[0];
+
+        // Find the date input element by its name
+        var dateInput = document.getElementsByName('date')[0];
+
+        // Set the min attribute to the current date
+        dateInput.setAttribute('min', currentDate);
+
+        // Add an event listener for change event on the date input
+        dateInput.addEventListener('change', function() {
+            // Call the function to check the date
+            checkDateValidity();
+        });
+    });
+
+    // Function to check the validity of the selected date
+    function checkDateValidity() {
+        var dateInput = document.getElementsByName('date')[0];
+        var selectedDate = new Date(dateInput.value);
+        var currentDate = new Date();
+
+        // Compare the selected date with the current date
+        if (selectedDate < currentDate) {
+            // Display an error message
+            document.getElementById('dateErrorMessage').innerText = 'Invalid date. Please select a date from today onwards.';
+            return false;
+        } else {
+            // Clear any previous error message
+            document.getElementById('dateErrorMessage').innerText = '';
+            return true;
+        }
+    }
+</script>
+
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     <script src=."/js/bootstrap.bundle.js"></script>
