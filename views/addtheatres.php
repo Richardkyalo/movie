@@ -49,6 +49,7 @@
         <div class="row">
             <div class="col-12">
                 <?php
+                session_start();
                 include "adminnavbar.php";
                 include("../includes/addtheatre.inc.php");
                 $error = "";
@@ -56,6 +57,11 @@
                     $error = $_GET['error'];
                 } else {
                     $error = "";
+                }
+                $email = $_SESSION['email'];
+                if (!isset($email)) {
+                    header("Location: login.php");
+                    exit();
                 }
                 ?>
             </div>

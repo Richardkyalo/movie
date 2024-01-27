@@ -35,6 +35,10 @@
                  $data= new theatres();
                  $email = $_SESSION['email'];
                  $theatres = $data->getAllTheatreDetails();
+                 if (!isset($email)) {
+                     header("Location: login.php");
+                     exit();
+                 }
                  $error = "";
                  if (isset($_GET['error'])) {
                      $error = $_GET['error'];

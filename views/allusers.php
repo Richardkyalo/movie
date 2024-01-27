@@ -35,6 +35,10 @@
                  $data= new users();
                  $email = $_SESSION['email'];
                  $users = $data->getAllUserDetails();
+                 if (!isset($email)) {
+                     header("Location: login.php");
+                     exit();
+                 }
                  $error = "";
                  if (isset($_GET['error'])) {
                      $error = $_GET['error'];

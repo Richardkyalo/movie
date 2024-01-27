@@ -51,6 +51,10 @@
     include("../includes/adminprofile.inc.php");
     $data= new profile();
     $email = $_SESSION['email'];
+    if (!isset($email)) {
+        header("Location: login.php");
+        exit();
+    }
     $data1= $data->getuserdata($email);
     // $data = $userDetails;
     $fname= $data1['firstname'];

@@ -61,15 +61,18 @@
             <?php
             session_start();
             include "adminnavbar.php";
-            include("../includes/add_movie.inc.php");
-            $data = new profile();
+            include("../includes/movieupdate.inc.php");
+            $movie="";
+            if(isset($_POST['update_submit'])){
+                $movie=$_POST['movie'];
+            }
+            $data = new movie_detail();
             $email = $_SESSION['email'];
-            $data1 = $data->getuserdata($email);
+            $data1 = $data->getmoviedata($movie);
             if (!isset($email)) {
                 header("Location: login.php");
                 exit();
             }
-            $theatre = $data1['theatre'];
             $error = "";
             if (isset($_GET['error'])) {
                 $error = $_GET['error'];
@@ -87,27 +90,27 @@
                 <div class="row">
                     <form action="" method="post" enctype="multipart/form-data"  onsubmit="return checkDateValidity();">
                         <div class="form">
-                            <h3>ADD MOVIE</h3><br>
+                            <h3>UPDATE SELECTED MOVIE <br><?php echo $data1['movie']?></h3><br>
                             <div>
                                 <p style="color:#ff7200;">*<?= $error ?></p>
                             </div>
                             <div class="input-group mb-3">
-                                <input name="movie_name" type="text" value="" class="input form-control" id="" placeholder="Movie Name" aria-label="Username" aria-describedby="basic-addon1" />
+                                <input name="movie_name" type="text" value="<?php echo $data1['movie']?>" class="input form-control" id="" placeholder="Movie Name" aria-label="Username" hidden aria-describedby="basic-addon1" />
                             </div><br>
                             <div>
                                 <p style="color:#ff7200;">*<?= $error ?></p>
                             </div>
-                            <p style="color: #ff7200;">Choose Theatres</p>
+                            <p style="color: #ff7200;">Choose Theatre</p>
                             <div class="row mb-3">
                                 <div class="col col-md-4 colo-lg-4 col-sm-12">
-                                    <input name="theatre" class="form-control" type="text" value="<?php echo $theatre ?>" readonly style="color: black;">
+                                    <input name="theatre" class="form-control" type="text" value="<?php echo $data1['theatre'] ?>" readonly style="color: black;">
                                 </div>
                                 <div class="col col-md-4 colo-lg-4 col-sm-12">
                             <div id="dateErrorMessage" style="color: #ff7200;"></div>
-                                    <input type="date" name="date">
+                                    <input type="date" value="<?php echo $data1['date']?>" name="date">
                                 </div>
                                 <div class="col col-md-4 colo-lg-4 col-sm-12">
-                                    <input type="time" name="time">
+                                    <input type="time" value="<?php echo $data1['time']?>" name="time">
                                 </div>
                             </div><br>
                             <div>
@@ -116,11 +119,11 @@
                             <p style="color: #ff7200;">Length of the Movie</p>
                             <div class="input-group mb-3">
                                 <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <input name="hours" type="number" value="" class="input form-control" id="" placeholder="" aria-label="" aria-describedby="basic-addon1" />
+                                    <input name="hours" type="number" value="<?php echo $data1['length_hours']?>" class="input form-control" id="" placeholder="" aria-label="" aria-describedby="basic-addon1" />
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3" style="color:#ff7200;">Hrs</div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <input name="minutes" type="number" value="" class="input form-control" id="" placeholder="" aria-label="" aria-describedby="basic-addon1" />
+                                    <input name="minutes" type="number" value="<?php echo $data1['length_minutes']?>" class="input form-control" id="" placeholder="" aria-label="" aria-describedby="basic-addon1" />
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3" style="color:#ff7200;">Minutes</div>
                             </div><br>
@@ -130,11 +133,11 @@
                             <p style="color: #ff7200;">Charges of the Movie</p>
                             <div class="input-group mb-3">
                                 <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <input name="charge" type="number" value="" class="input form-control" id="" placeholder="Charges" aria-label="street" aria-describedby="basic-addon1" />
+                                    <input name="charge" type="number" value="<?php echo $data1['charge']?>" class="input form-control" id="" placeholder="Charges" aria-label="street" aria-describedby="basic-addon1" />
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3"></div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <input name="rating" type="number" value="" class="input form-control" id="" placeholder="Rating" aria-label="street" aria-describedby="basic-addon1" />
+                                    <input name="rating" type="number" value="<?php echo $data1['rating']?>" class="input form-control" id="" placeholder="Rating" aria-label="street" aria-describedby="basic-addon1" />
                                 </div>
                             </div><br>
                             <div>
@@ -144,7 +147,7 @@
                                 <label for="actor">Main Actor</label>
                             </div>
                             <div class="input-group mb-3">
-                                <input name="actor" type="text" value="" class="input form-control" id="" placeholder="Actor" aria-label="street" aria-describedby="basic-addon1" />
+                                <input name="actor" type="text" value="<?php echo $data1['actor']?>" class="input form-control" id="" placeholder="Actor" aria-label="street" aria-describedby="basic-addon1" />
                             </div>
                             <div>
                                 <p style="color:#ff7200;">*<?= $error ?></p>
@@ -154,7 +157,7 @@
                                     <label for="comment">Movie Description</label>
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <textarea class="textarea" name="movie_description" placeholder="Enter movie description here"></textarea>
+                                    <textarea class="textarea" name="movie_description" placeholder="Enter movie description here"><?php echo $data1['movie_description']?></textarea>
                                 </div>
                             </div>
                             <div>
@@ -164,7 +167,7 @@
                                 <label for="image">Add Movie Cover Pictures</label>
                             </div>
                             <div class="input-group mb-3">
-                                <input type="file" name="image" id="image" placeholder="add displays">
+                                <input type="file" name="image" id="image" value="<?php echo $data1['cover']?>" placeholder="add displays">
                             </div>
                             <div>
                             </div>

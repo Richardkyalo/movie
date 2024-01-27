@@ -43,6 +43,10 @@
                 } else {
                     $error = "";
                 }
+                if (!isset($email)) {
+                    header("Location: login.php");
+                    exit();
+                }
                 ?>
             </div>
         </div>
@@ -84,14 +88,14 @@
                                 <td><?php echo $movie['date'] ?></td>
                                 <td>
                                     <div style="display: flex; gap: 50px;">
-                                        <form action="update_script.php" method="post">
-                                            <input type="hidden" name="movie_id" value="<?php echo $movie['movie']; ?>">
+                                        <form action="updatemovie.php" method="post">
+                                            <input type="hidden" name="movie" value=<?php echo $movie['movie']; ?>>
                                             <input type="submit" name="update_submit" value="UPDATE" class="btn shadow-sm text-dark" style="background-color: #ff7200;">
                                         </form>
 
                                         <!-- Delete Form -->
-                                        <form action="delete_script.php" method="post">
-                                            <input type="hidden" name="movie_id" value="<?php echo $movie['movie']; ?>">
+                                        <form action="../includes/delete_script.inc.php" method="post">
+                                            <input type="hidden" name="movie" value="<?php echo $movie['movie']; ?>">
                                             <input type="submit" name="delete_submit" value="DELETE" class="btn shadow-sm text-dark" style="background-color: #ff7200;">
                                         </form>
                                     </div>
@@ -99,8 +103,9 @@
 
                         <?php }
                     } else {
-                        echo "No Movies found.";
-                    }
+                        $error = 'No movies found';?>
+                        <p style="color:#ff7200;">*<?= $error ?></p>
+                    <?php } ?>
                         ?>
                             </tr>
                 </table>

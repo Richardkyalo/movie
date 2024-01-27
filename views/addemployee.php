@@ -57,6 +57,11 @@
     include("../includes/add_employee.inc.php");
     $data = new theatres();
     $theatres = $data->getAllTheatreDetails();
+    $email = $_SESSION['email'];
+    if (!isset($email)) {
+        header("Location: login.php");
+        exit();
+    }
     $error = "";
     if (isset($_GET['error'])) {
         $error = $_GET['error'];
