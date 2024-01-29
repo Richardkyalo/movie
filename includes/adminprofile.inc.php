@@ -63,7 +63,14 @@ class theatres {
 class employees {
     public function getemployeesdata() {
         $adminProfileInstance = new adminprofile();
-        $userDetails = $adminProfileInstance->getEmployeeDetails();
-        return $userDetails;   
+        $employeeDetails = $adminProfileInstance->getEmployeeDetails();
+        return $employeeDetails;   
+    }
+}
+class customers {
+    public function getcustomersdata() {
+        $adminProfileInstance = new adminprofile();
+        $customerDetails = $adminProfileInstance->getcustomerDetails();
+        return $customerDetails;   
     }
 }

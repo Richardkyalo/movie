@@ -37,4 +37,33 @@ class Add_employee extends database{
         $stmt = null;
         return $allTheatreDetails;
     }
+    public function getUserDetails($email){
+        $stmt = $this->connect()->prepare("SELECT * FROM users WHERE email=?");
+        $stmt->execute(array($email));
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt = null;
+        return $user;
+    }
+    public function updateEmployee($role, $firstname, $email, $theatre, $phone) {
+        // Assuming 'id' is the primary key to identify the employee you want to update
+        $stmt = $this->connect()->prepare("UPDATE users SET roles=?, firstname=?, email=?,
+        theatre=?, phone=? WHERE email=?");    
+        if ($stmt->execute(array($role, $firstname, $email, $theatre, $phone, $email))) {
+            $stmt = null;
+            header("Location: ../views/employees.php");
+            exit();
+        } else {
+            $stmt = null;
+            header("Location: ./updateemployee.php? error=Server Error");
+            exit();
+        }
+    }
+    public function deleteeemployee($employee){
+        $stmt = $this->connect()->prepare("DELETE FROM users WHERE email=?");
+        $stmt->execute(array($employee));
+        $stmt = null;
+        header("Location: ../views/employees.php");
+        exit();
+    }
+    
 }

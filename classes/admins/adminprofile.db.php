@@ -52,6 +52,30 @@ class adminprofile extends database {
             throw $e;
         }
     }
-    protected function getEmployeeDetails()
-    
+    public function getEmployeeDetails(){
+        try{
+            $stmt= $this->connect()->prepare("SELECT * FROM users where roles=?");
+            $role='employee';
+            $stmt->execute([$role]);
+            $allEmployeeDetails = $stmt->fetchALL(PDO::FETCH_ASSOC);
+            $stmt = null;
+            return $allEmployeeDetails;
+        } catch(PDOException $e) {
+            error_log('PDOException'. $e->getMessage());
+            throw $e;
+        }
+    }
+    public function getcustomerDetails(){
+        try{
+            $stmt = $this->connect()->prepare('SELECT * FROM users WHERE roles=?');
+            $role= 'customer';
+            $stmt->execute([$role]);
+            $allCustomerDetails = $stmt->fetchALL(PDO::FETCH_ASSOC);
+            $stmt = null;
+            return $allCustomerDetails;
+        } catch(PDOException $e) {
+            error_log('PDOException'. $e->getMessage());
+            throw $e;
+        }
+    }
 }

@@ -7,20 +7,9 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="adminprofile.php">PROFILE</a></li>
-
-                <!-- Updated USERS dropdown -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" style="color: #ff7200;" id="navbarDropdownUsers" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        USERS
-                    </a>
-                    <ul class="dropdown-menu" style="background: linear-gradient(to top, rgba(0, 0, 0, 0.8)50%, rgba(0, 0, 0, 0.8)50%);" aria-labelledby="navbarDropdownUsers">
-                    <li><a class="dropdown-item" href="allusers.php" style="color: #ff7200;">ALL USERS</a></li>    
-                    <li><a class="dropdown-item" href="#" style="color: #ff7200;">EMPLOYEES</a></li>
-                        <li><a class="dropdown-item" href="#" style="color: #ff7200;">CUSTOMERS</a></li>
-                    </ul>
-                </li>
-                <!-- End of USERS dropdown -->
-
+                <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="allusers.php">ALL USERS</a></li>
+                <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="employees.php">EMPLOYEES</a></li>
+                <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="customers.php">CUSTOMERS</a></li>
                 <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="admintheatres.php">THEATRES</a></li>
                 <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="adminmovies.php">MOVIES</a></li>
                 <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="#">UPCOMING MOVIES</a></li>

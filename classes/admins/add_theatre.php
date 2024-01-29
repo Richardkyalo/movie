@@ -46,5 +46,16 @@ class Add_theatre extends database{
             echo "Error: " . $e->getMessage();
         }
     }
+    public function deletetheatre($theatre) {
+        $stmt = $this->connect()->prepare("DELETE FROM theatres WHERE theatre_name = ?");
+        try{
+            if($stmt->execute([$theatre])) {
+            $stmt = null;
+            header("Location: ../views/admintheatres.php");
+            }
+        }catch(PDOException $e) {
+            echo "Error". $e->getMessage();
+        }
+}
     
 }
