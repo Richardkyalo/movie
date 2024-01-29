@@ -1,4 +1,5 @@
 <?php
+
 if(isset($_POST["submit"])){
     $theatre_name=stripslashes(htmlspecialchars($_POST["theatre_name"]));
     $county=stripslashes(htmlspecialchars($_POST["county"]));
@@ -7,9 +8,7 @@ if(isset($_POST["submit"])){
     $seats= stripslashes(htmlspecialchars($_POST["seats"]));
     $image=$_FILES['images']['name'];
 
-    include "../classes/connect.php";
-    include "../classes/admins/add_theatre.php";
-    include "../controller/add_theatre_controller.php";
+
     
     $add_theatre= new add_theatre_controller($theatre_name, $county, $town, $street, $seats, $image);
     $add_theatre->add_theatre();

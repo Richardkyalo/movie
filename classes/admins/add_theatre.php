@@ -29,4 +29,22 @@ class Add_theatre extends database{
         }
 
     }
+    public function get_theatre($theatre) {
+        $stmt = $this->connect()->prepare("SELECT * FROM theatres WHERE theatre_name=?");
+        $stmt->execute([$theatre]);
+        $theatreDetails = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt = null;
+        return $theatreDetails;
+    }
+    protected function updatetheatre($theatre_name, $county, $town, $street, $seats, $image){
+        $stmt = $this->connect()->prepare("UPDATE movies SET theatre_name = ?, county = ?,
+        town = ?, streat = ?, seats = ?, dispaly= ? WHERE theatre_name = ?");
+        try{
+            $result = $stmt->execute([$theatre_name, $county, $town, $street, $seats, $image]);
+            $stmt = null;
+        }catch(PDOException $e){
+            echo "Error: " . $e->getMessage();
+        }
+    }
+    
 }

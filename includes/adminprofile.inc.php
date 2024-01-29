@@ -60,3 +60,10 @@ class theatres {
         return $theatres;
     }
 }
+class employees {
+    public function getemployeesdata() {
+        $adminProfileInstance = new adminprofile();
+        $userDetails = $adminProfileInstance->getEmployeeDetails();
+        return $userDetails;   
+    }
+}

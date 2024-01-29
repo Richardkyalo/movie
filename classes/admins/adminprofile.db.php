@@ -52,5 +52,6 @@ class adminprofile extends database {
             throw $e;
         }
     }
+    protected function getEmployeeDetails()
     
 }

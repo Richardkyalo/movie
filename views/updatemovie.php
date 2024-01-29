@@ -171,7 +171,7 @@
                             </div>
                             <div>
                             </div>
-                            <button class="button btn btn-block col-12" type="submit" name="submit">ADD</button><br>
+                            <button class="button btn btn-block col-12" type="submit" name="submit">UPDATE</button><br>
                         </div>
                     </form>
                 </div>

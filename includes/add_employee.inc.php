@@ -2,6 +2,7 @@
 
 include "../classes/connect.php";
 include "../classes/admins/addemployee.db.php";
+include "../classes/admins/adminprofile.db.php";
 include "../controller/add_employee_controller.php";
 if(isset($_POST["submit"])){
     $role=stripslashes(htmlspecialchars($_POST["role"]));
@@ -22,5 +23,12 @@ class theatres
         $allTheatredetails = new Add_employee();
         $theatres = $allTheatredetails->getAllTheatreDetails();
         return $theatres;
+    }
+}
+class profile {
+    public function getuserdata($email) {
+        $adminProfileInstance = new adminprofile();
+        $userDetails = $adminProfileInstance->getUserDetails($email);
+        return $userDetails;   
     }
 }

@@ -62,6 +62,8 @@
         header("Location: login.php");
         exit();
     }
+    $logedinadmin = new profile();
+    $loggeddata = $logedinadmin->getuserdata($email);
     $error = "";
     if (isset($_GET['error'])) {
         $error = $_GET['error'];
@@ -127,13 +129,7 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <label for="theatre" class="form-label shadow-sm">Theatre</label>
-                        <select id="theatre" name="theatre" class="form-control">
-                            <?php 
-                            foreach ($theatres as $theatre) {?>
-                                <option value="<?php echo $theatre['theatre_name'] ?>"><?php echo $theatre['theatre_name'] ?></option>
-                            <?php }
-                            ?>
-                        </select>
+                        <input type="text" class="form-control" name="theatre" value="<?php echo $loggeddata["theatre"] ?>" placeholder="Phone" style="color: black;" readonly>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <label for="inputZip" class="form-label shadow-sm">Phone</label>

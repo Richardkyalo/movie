@@ -18,7 +18,7 @@ if(isset($_POST['submit'])){
     $cover_size = $_FILES['image']['size'];
 
 
-    $add_movie = new updatemovie_controller(
+    $update_movie = new updatemovie_controller(
         $movie_name,
         $movie_description,
         $hours,
@@ -32,7 +32,7 @@ if(isset($_POST['submit'])){
         $time,
         $movie
     );
-    $add_movie->updatemovie();
+    $update_movie->updatemovie();
 }
 class movie_detail {
     public function getmoviedata($movie) {
