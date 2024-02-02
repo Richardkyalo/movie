@@ -8,8 +8,8 @@
             <ul class="navbar-nav">
                 <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="">HOME</a></li>
                 <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="#">THEATRES</a></li>
-                <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="#">MOVIES</a></li>
-                <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="#">UPCOMING MOVIES</a></li>
+                <!-- <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="#">MOVIES</a></li>
+                <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="#">UPCOMING MOVIES</a></li> -->
                 <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="#">ABOUT</a></li>
                 <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="#">SERVICES</a></li>
                 <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="">LOGIN</a></li>

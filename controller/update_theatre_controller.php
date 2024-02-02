@@ -7,7 +7,7 @@ class Add_theatre_controller extends add_theatre
     private $street;
     private $seats;
     private $image;
-    private $path = "./updatetheatre.php";
+    private $path = "../views/admintheatres.php";
 
     public function __construct($theatre_name, $county, $town, $street, $seats, $image)
     {
@@ -73,10 +73,11 @@ class Add_theatre_controller extends add_theatre
             exit();
         }
 
-        if (!$this->theatreExists()) {
-            header("Location: " . $this->path . "?error=Theatre already exists");
-            exit();
-        }else {
+        // if (!$this->theatreExists()) {
+        //     header("Location: " . $this->path . "?error=Theatre already exists");
+        //     exit();
+        // }
+        else {
 
         $uploadedFile = $this->uploadFile();
 
@@ -85,7 +86,7 @@ class Add_theatre_controller extends add_theatre
                 header("Location: ../views/admintheatres.php");
                 exit();
             } else {
-                header("Location: " . $this->path . "?error=Failed to add theatre");
+                header("Location: " . $this->path . "?error=Fai to update theatre");
                 exit();
             }
         } else {

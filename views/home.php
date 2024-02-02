@@ -2,20 +2,20 @@
 <html lang="en">
 
 <head>
-<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Richards</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Richards</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous" />
 
-    <!-- font awesome  -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous" />
+  <!-- font awesome  -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous" />
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="style.css">
   <style>
     body {
       margin: 0;
@@ -106,7 +106,11 @@
 <body class="main">
 
   <!-- Navbar -->
-  <?php include("navigationbar.php"); ?>
+  <?php include("navigationbar.php");
+  include("../includes/add_movie.inc.php");
+  $data = new movies();
+  $movies = $data->get_movies();
+  ?>
 
   <!-- Video Background -->
   <div id="video-container">
@@ -126,114 +130,51 @@
       <br>
       <p style="color: black; font-weight: bold;  font-size: 40px;">It has never been easier to <br>watch free movies online.</p>
       <p style="color: black;  font-size: 20px; font-family: 'Times New Roman', Times, serif;">Once you register for a free account with Plex, we will keep your place<br>
-       from screen to screen as long as you are signed in. No matter what<br>
+        from screen to screen as long as you are signed in. No matter what<br>
         device you choose, your free movies will pick up where you left off<br>
-         with ease.</p>
+        with ease.</p>
     </div>
-    <div class="col-sm-12 col-md-6 col-lg-6 mt-5">  
+    <div class="col-sm-12 col-md-6 col-lg-6 mt-5">
       <img src="./images/site.jpg" alt="" class="img-fluid">
     </div>
   </div>
 
   <!-- Latest Movies Section -->
   <div class="" style="background: #fff;">
-    <br><h2 style="color: #ff7200; text-align:center;">Playing Soon In Our Theatres</h2>
+    <br>
+    <h2 style="color: #000; text-align:center;">Playing Soon In Our Theatres</h2>
     <div class="card-group">
-      <div class="card" style="width: 18rem;">
-        <img src="./images/534.jpg" class="card-img-top" alt="Movie 1">
-        <div class="card-body">
-          <h5 class="card-title">Movie Title 1</h5>
-          <p class="card-text">Description of the movie goes here.</p>
-           <a href="#" class="btn" style="background: #ff7200;">Book Now</a>
-        </div>
-        <div class="card-footer">
-          <!-- Rating stars -->
-          <div class="rating">
-            <span class="fa fa-star checked" style="color:gold;"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star"></span>
+      <?php if (!empty($movies)) {
+
+        foreach ($movies as $movie) {
+      ?>
+          <div class="card" style="width: 18rem;">
+            <img src="./images/<?php echo $movie['cover']; ?>" class="card-img-top" alt="Movie 1">
+            <div class="card-body">
+              <h5 class="card-title">Tittle :  <?php echo strtoupper($movie['movie'])?></h5>
+              <!-- <p class="card-text"><?php //echo $movie['movie_description'];?></p> -->
+              <a href="#" class="btn" style="background: #ff7200;">Book Now</a>
+            </div>
+            <div class="card-footer">
+              <!-- Rating stars -->
+              <div class="rating">
+                <?php
+                $rating= $movie['rating'];
+               for ($i = 1; $i <= $rating; $i++) {
+                echo '<span class="fa fa-star checked" style="color:gold;"></span>';
+                }
+                ?>
+                IMDB::<?php 
+                echo $movie['rating'];
+                ?>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="card" style="width: 18rem;">
-        <img src="./images/534.jpg" class="card-img-top" alt="Movie 1">
-        <div class="card-body">
-          <h5 class="card-title">Movie Title 1</h5>
-          <p class="card-text">Description of the movie goes here.</p>
-          <!-- Button for booking -->
-          <a href="#" class="btn" style="background: #ff7200;">Book Now</a>
-        </div>
-        <div class="card-footer">
-          <!-- Rating stars -->
-          <div class="rating">
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star"></span>
-          </div>
-        </div>
-      </div>
-      <div class="card" style="width: 18rem;">
-        <img src="./images/534.jpg" class="card-img-top" alt="Movie 1">
-        <div class="card-body">
-          <h5 class="card-title">Movie Title 1</h5>
-          <p class="card-text">Description of the movie goes here.</p>
-          <!-- Button for booking -->
-          <a href="#" class="btn" style="background: #ff7200;">Book Now</a>
-        </div>
-        <div class="card-footer">
-          <!-- Rating stars -->
-          <div class="rating">
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star"></span>
-          </div>
-        </div>
-      </div>
-      <div class="card" style="width: 18rem;">
-        <img src="./images/534.jpg" class="card-img-top" alt="Movie 1">
-        <div class="card-body">
-          <h5 class="card-title">Movie Title 1</h5>
-          <p class="card-text">Description of the movie goes here.</p>
-          <!-- Button for booking -->
-          <a href="#" class="btn" style="background: #ff7200;">Book Now</a>
-        </div>
-        <div class="card-footer">
-          <!-- Rating stars -->
-          <div class="rating">
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
-            <span class="fa fa-star"></span>
-          </div>
-        </div>
-      </div> <!-- Add more cards with the same structure -->
+
+      <?php
+        }
+      }
+      ?> <!-- Add more cards with the same structure -->
     </div>
   </div>
 

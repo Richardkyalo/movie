@@ -14,7 +14,7 @@ class Updatemovie_controller extends add_movie
     private $date;
     private $time;
     private $cover_size;
-    private $path = "../views/updatemovie.php";
+    private $path = "../views/adminmovies.php ";
 
     public function __construct(
         $movie,
@@ -28,7 +28,7 @@ class Updatemovie_controller extends add_movie
         $theatre,
         $date,
         $time,
-        $movie_name,
+        $movie_name
     ) {
         $this->movie = $movie;
         $this->movie_description = $movie_description;
@@ -47,7 +47,7 @@ class Updatemovie_controller extends add_movie
     public function rating()
     {
         $response = "";
-        if ($this->rating > 10 && $this->rating < 0) {
+        if ($this->rating > 10 || $this->rating < 0) {
             $response = false;
         } else {
             $response = true;
@@ -77,7 +77,7 @@ class Updatemovie_controller extends add_movie
     }
     public function updatemovie()
     {
-        if ($this->rating == false) {
+        if (!$this->rating()) {
             header("Location:" . $this->path . "? error=wrong rating");
             exit();
         }

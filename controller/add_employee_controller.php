@@ -8,7 +8,7 @@ class Add_employee_controller extends add_employee
     private $theatre;
     private $phone;
     private $path = "./addemployee.php";
-    private $path2= "./allusers.php";
+    private $path2= "./employees.php";
 
     public function __construct($role, $firstname, $email, $password, $theatre, $phone)
     {

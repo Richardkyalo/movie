@@ -59,6 +59,7 @@
         </div>
         <div class="row">
             <div class="col-12">
+                <div style="color: #ff7200;">*<?php echo $error?></div>
                 <table class="table table-hover table-bordered mt-4">
                     <thead>
 
@@ -115,7 +116,7 @@
                         $error = 'No movies found';?>
                         <p style="color:#ff7200;">*<?= $error ?></p>
                     <?php } ?>
-                        ?>
+              
                             </tr>
                 </table>
                 <!-- Your table code remains the same -->

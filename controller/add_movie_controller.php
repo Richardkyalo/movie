@@ -73,6 +73,20 @@ class add_movie_controller extends add_movie
         }
         return $response;
     }
+    private function uploadFile()
+    {
+        $tempFile = $_FILES['image']['tmp_name'];
+        $image_extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+        $newFileName = bin2hex(random_bytes(5)) . '.' . $image_extension;
+        $targetFile = "../views/images/" . $newFileName;
+
+        if (move_uploaded_file($tempFile, $targetFile)) {
+            return $newFileName;
+        } else {
+            return false;
+        }
+    }
+
     public function add_movie()
     {
         if ($this->rating == false) {
@@ -88,21 +102,33 @@ class add_movie_controller extends add_movie
         //     exit();
         // } 
         else {
-            $this->addMovie(
-                $this->movie_name,
-                $this->movie_description,
-                $this->hours,
-                $this->minutes,
-                $this->charge,
-                $this->rating,
-                $this->actor,
-                $this->cover,
-                $this->theatre,
-                $this->date,
-                $this->time
-            );
-            header("Location: ../views/adminmovies.php ? error=");
-            exit();
+            $uploadedFile = $this->uploadFile();
+            if($uploadedFile){
+                if($this->addMovie(
+                    $this->movie_name,
+                    $this->movie_description,
+                    $this->hours,
+                    $this->minutes,
+                    $this->charge,
+                    $this->rating,
+                    $this->actor,
+                    $uploadedFile,
+                    $this->theatre,
+                    $this->date,
+                    $this->time
+                )){
+                    header("Location: ../views/adminmovies.php ?");
+                    exit();
+                }else{           
+                    header("Location: " . $this->path . "?error=Failed to add theatre");
+                    exit();
+                }
+            }else{
+                header("Location: " . $this->path . "?error=Failed to upload file");
+                exit();
+            }
+            
+
         }
     }
 }

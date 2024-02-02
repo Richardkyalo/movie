@@ -16,11 +16,23 @@ class Add_employee extends database{
         return $response;
     }
     protected function createEmployee($role, $firstname, $email, $password, $theatre, $phone){
-        $stmt=$this->connect()->prepare("INSERT INTO users(roles, firstname, email, passwords, theatre, phone) values(?,?,?,?,?,?)");
+        $stmt=$this->connect()->prepare("INSERT INTO users(roles, firstname, email, passwords, theatre, phone, user_id) values(?,?,?,?,?,?,?)");
         $hasshed_password= password_hash($password, PASSWORD_DEFAULT);
-        if($stmt->execute(array($role,$firstname,$email,$hasshed_password,$theatre,$phone))){
+
+        function generateRandomString($length = 6)
+        {
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $randomString = '';
+            for ($i = 0; $i < $length; $i++) {
+                $randomString .= $characters[rand(0, strlen($characters) - 1)];
+            }
+            return $randomString;
+        }
+
+        $user_id = generateRandomString();
+        if($stmt->execute(array($role,$firstname,$email,$hasshed_password,$theatre,$phone,$user_id))){
             $stmt=null;
-            header("Location: ../views/allusers.php");
+            header("Location: ../views/employees.php");
             exit();
         }
         else{

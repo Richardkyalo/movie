@@ -16,8 +16,20 @@ class Add_theatre extends database{
         return $response;
     }
     protected function addtheatre($theatre_name, $county, $town, $street, $seats, $image){
-        $stmt=$this->connect()->prepare("INSERT INTO theatres(theatre_name, county, town, streat, seats, display) values(?,?,?,?,?,?)");
-        if($stmt->execute(array($theatre_name,$county,$town,$street,$seats,$image))){
+        $stmt=$this->connect()->prepare("INSERT INTO theatres(theatre_name, county, town, streat, seats, display, theatre_id) values(?,?,?,?,?,?,?)");
+       
+        function generateRandomString($length = 6)
+        {
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $randomString = '';
+            for ($i = 0; $i < $length; $i++) {
+                $randomString .= $characters[rand(0, strlen($characters) - 1)];
+            }
+            return $randomString;
+        }
+
+        $theatre_id = generateRandomString();
+        if($stmt->execute(array($theatre_name,$county,$town,$street,$seats,$image,$theatre_id))){
             $stmt=null;
             // header("Location: ../views/admintheatres.php");
             // exit();
@@ -36,15 +48,15 @@ class Add_theatre extends database{
         $stmt = null;
         return $theatreDetails;
     }
-    protected function updatetheatre($theatre_name, $county, $town, $street, $seats, $image){
-        $stmt = $this->connect()->prepare("UPDATE movies SET theatre_name = ?, county = ?,
-        town = ?, streat = ?, seats = ?, dispaly= ? WHERE theatre_name = ?");
-        try{
-            $result = $stmt->execute([$theatre_name, $county, $town, $street, $seats, $image]);
+    protected function updatetheatre($theatre_name, $county, $town, $street, $seats, $image) {
+        $stmt = $this->connect()->prepare("UPDATE theatres SET county = ?, town = ?, streat = ?, seats = ?, display = ? WHERE theatre_name = ?");
+        try {
+            $result = $stmt->execute([$county, $town, $street, $seats, $image, $theatre_name]);
             $stmt = null;
-        }catch(PDOException $e){
+        } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
+        return $result;
     }
     public function deletetheatre($theatre) {
         $stmt = $this->connect()->prepare("DELETE FROM theatres WHERE theatre_name = ?");
