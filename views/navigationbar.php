@@ -16,12 +16,12 @@
                 <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="#">PROFILE</a></li>
                 <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="#">CONTACT</a></li>
                 <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="#">HELP</a></li>
-                <li>
+                <!-- <li>
                     <div class="search">
                         <input class="srch" style="border: 1px solid #ff7200;" type="search" name="" placeholder="Type To text">
                         <a href="#"> <button class="btn" style="background-color: #ff7200;">Search</button></a>
                     </div>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>
