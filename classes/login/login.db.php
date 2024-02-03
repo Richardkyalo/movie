@@ -17,16 +17,17 @@ class login extends database
             if (password_verify($password, $hashed_password)) {
                 // Set session variables
                 $_SESSION['email'] = $data["email"];
+                $_SESSION['user_id']=$data["user_id"];
                 $_SESSION["login"] = "OK";
 
                 if ($roles === "admin") {
                     header("Location:../views/adminprofile.php");
                 } 
                 elseif ($roles === "customer") {
-                    header("location:../views/adminRouter.php?page=customersDashboard");
+                    header("location:../views/home.php");
                 } 
-                elseif ($roles = "employers") {
-                    header("location:../views/adminRouter.php?page=employerDashboard");
+                elseif ($roles = "employees") {
+                    header("location:../views/home.php");
                 }
             } else {
                 header("Location:../views/login.php? error=invalid details.");

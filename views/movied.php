@@ -1,175 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Our Cinema</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Book Movie - Your Movie Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .seating-layout {
+            display: grid;
+            grid-template-columns: repeat(6, 50px);
+            gap: 5px;
+        }
 
+        .seat {
+            width: 50px;
+            height: 50px;
+            background-color: #ddd;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .seat.selected {
+            background-color: #ff7200;
+            color: #fff;
+        }
+        /* body{
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.8)50%, rgba(0, 0, 0, 0.8)50%);
+        } */
+        .form {
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.8)50%, rgba(0, 0, 0, 0.8)50%);
+        transform: translate(0%, -5%);
+        border-radius: 10px;
+        padding: 25px;
+    }
+
+    .form input {
+        background: transparent;
+        border: 1px solid #ff7200;
+        /* border-top: none;
+        border-right: none;
+        border-left: none; */
+        color: #fff;
+        font-size: 15px;
+        letter-spacing: 1px;
+        font-family: sans-serif;
+    }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #ff7200;
+        }
+
+        .form input {
+        background: transparent;
+        border: 1px solid #ff7200;
+        /* border-top: none;
+        border-right: none;
+        border-left: none; */
+        color: #fff;
+        font-size: 15px;
+        letter-spacing: 1px;
+        font-family: sans-serif;
+        border-radius: 5px;
+    }
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-group button {
+            background-color: #ff7200;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        h2 {
+        font-family: sans-serif;
+        text-align: center;
+        color: #ff7200;
+        font-size: 22px;
+        background-color: #fff;
+        border-radius: 10px;
+        margin: 2px;
+        padding: 8px;
+    }
+    </style>
 </head>
-<style>
-    .card-img-top {
-        height: 200px; /* Set the desired height for all images */
-        object-fit: cover; /* Maintain aspect ratio and cover the entire space */
-    } 
-</style>
-<body>
 
-<!-- Static top navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand" href="#">Our Cinema</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Movies</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Theatres</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
-            </ul>
-        </div>
+<body class="main">
+    <div>
+    <?php
+include ("navigationbar.php");
+?>
     </div>
-</nav>
 
-<!-- Hero section -->
-<div class="container text-center mt-5">
-    <h1>Welcome to Our Cinema</h1>
-    <p>Experience the latest movies and theatre displays</p>
+    <div class="container-fluid position-relative align-content-center mt-5">
+        <div class="row">
+            <div class="col-sm-12 col-lg-6 col-md-6">
+            <div class="seating-layout">
+            <!-- Sample seating layout with checkboxes -->
+            <div class="seat">
+                <input type="checkbox" id="seat1" class="seat-checkbox">
+                <label for="seat1">1</label>
+            </div>
+            <div class="seat">
+                <input type="checkbox" id="seat2" class="seat-checkbox">
+                <label for="seat2">2</label>
+            </div>
+            <div class="seat">
+                <input type="checkbox" id="seat3" class="seat-checkbox">
+                <label for="seat3">3</label>
+            </div>
+            <!-- Add more seats as needed -->
+        </div>
+            </div>
+            <div class="col-sm-12 col-lg-6 col-md-6">
+                <div class="form">
+            <h2>Book Your Tickets</h2>
+            <form action="process_booking.php" method="post">
+                <div class="form-group col-lg-12">
+                    <label for="name" class="form-group col-lg-12">Your Name:</label><br>
+                    <input type="text" id="name" name="name" class="form-group col-lg-12" required>
+                </div>
+                <div class="form-group col-lg-12">
+                    <label for="phone" class="form-group col-lg-12">Your Phone Number:</label><br>
+                    <input type="text" id="" class="form-group col-lg-12" name="phone" required>
+                </div>
+                <div class="form-group col-lg-12">
+                    <label for="selected_theatre" class="form-group col-lg-12">Select Theatre:</label>
+                    <select id="" class="form-group col-lg-12" name="selected_theatre" required>
+                        <option value="" disabled selected>Select Theatre</option>
+                        <option value="A1">A1</option>
+                        <option value="A2">A2</option>
+                        <!-- Add more seat options as needed -->
+                    </select>
+                </div>
+                <div class="form-group col-lg-12">
+                    <label for="selected_seats" class="form-group col-lg-12">Select Seats:</label>
+                    <select id="selected_seats"  class="form-group col-lg-12" name="selected_seats[]" multiple required>
+                        <!-- Options will be dynamically added using JavaScript -->
+                    </select>
+                </div>
+                <button type="submit" class="button col-lg-12">Book Now</button>
+            </form>
+        </div>
+            </div>
+        </div>
+
+    </div>
+<div>
+    <?php
+    include ("footer.php");
+    ?>
 </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get all seat checkboxes
+            const seatCheckboxes = document.querySelectorAll('.seat-checkbox');
 
-<!-- Latest Movies Section -->
-<<!-- Latest Movies Section -->
-<div class="container mt-5">
-    <h2>Latest Movies</h2>
-    <div class="card-group">
-        <div class="card" style="width: 18rem;">
-            <img src="./images/534.jpg" class="card-img-top" alt="Movie 1">
-            <div class="card-body">
-                <h5 class="card-title">Movie Title 1</h5>
-                <p class="card-text">Description of the movie goes here.</p>
-                <!-- Button for booking -->
-                <a href="#" class="btn btn-primary">Book Now</a>
-            </div>
-            <div class="card-footer">
-                <!-- Rating stars -->
-                <div class="rating">
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </div>
-            </div>
-        </div>
-        <div class="card" style="width: 18rem;">
-            <img src="./images/55.jpg" class="card-img-top" alt="Movie 2">
-            <div class="card-body">
-                <h5 class="card-title">Movie Title 2</h5>
-                <p class="card-text">Description of the movie goes here.</p>
-                <!-- Button for booking -->
-                <a href="#" class="btn btn-primary">Book Now</a>
-            </div>
-            <div class="card-footer">
-                <!-- Rating stars -->
-                <div class="rating">
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </div>
-            </div>
-        </div>
-        <div class="card" style="width: 18rem;">
-            <img src="./images/66.jpg" class="card-img-top" alt="Movie 3">
-            <div class="card-body">
-                <h5 class="card-title">Movie Title 3</h5>
-                <p class="card-text">Description of the movie goes here.</p>
-                <!-- Button for booking -->
-                <a href="#" class="btn btn-primary">Book Now</a>
-            </div>
-            <div class="card-footer">
-                <!-- Rating stars -->
-                <div class="rating">
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+            // Get the select element for selected seats
+            const selectedSeatsSelect = document.getElementById('selected_seats');
 
+            // Add event listener to each checkbox
+            seatCheckboxes.forEach(function (checkbox) {
+                checkbox.addEventListener('change', function () {
+                    updateSelectedSeats();
+                });
+            });
 
-<!-- Theatre Displays Section -->
-<div class="container mt-5">
-    <h2>Theatre Displays</h2>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card mb-4" style="width: 18rem;">
-                <img src="./images/2.jpg" class="card-img-top" alt="Theatre 1">
-                <div class="card-body">
-                    <h5 class="card-title">Theatre Title 1</h5>
-                    <p class="card-text">Description of the theatre display goes here.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card mb-4" style="width: 18rem;">
-                <img src="./images/2.jpg" class="card-img-top" alt="Theatre 2">
-                <div class="card-body">
-                    <h5 class="card-title">Theatre Title 2</h5>
-                    <p class="card-text">Description of the theatre display goes here.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card mb-4" style="width: 18rem;">
-                <img src="./images/2.jpg" class="card-img-top" alt="Theatre 3">
-                <div class="card-body">
-                    <h5 class="card-title">Theatre Title 3</h5>
-                    <p class="card-text">Description of the theatre display goes here.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+            // Update the selected seats in the dropdown
+            function updateSelectedSeats() {
+                // Clear existing options
+                selectedSeatsSelect.innerHTML = '';
 
-<!-- Footer -->
-<footer class="bg-dark text-light text-center py-3">
-    <div class="container">
-        <p>&copy; 2023 Our Cinema</p>
-    </div>
-</footer>
+                // Add options for selected seats
+                seatCheckboxes.forEach(function (checkbox) {
+                    if (checkbox.checked) {
+                        const option = document.createElement('option');
+                        option.value = checkbox.id;
+                        option.text = checkbox.id;
+                        selectedSeatsSelect.add(option);
+                    }
+                });
+            }
+        });
+    </script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

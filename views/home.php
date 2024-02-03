@@ -106,7 +106,9 @@
 <body class="main">
 
   <!-- Navbar -->
-  <?php include("navigationbar.php");
+  <?php 
+  session_start();
+  include  ("navigationbar.php");
   include("../includes/add_movie.inc.php");
   $data = new movies();
   $movies = $data->get_movies();
@@ -153,7 +155,12 @@
             <div class="card-body">
               <h5 class="card-title">Tittle :  <?php echo strtoupper($movie['movie'])?></h5>
               <!-- <p class="card-text"><?php //echo $movie['movie_description'];?></p> -->
-              <a href="#" class="btn" style="background: #ff7200;">Book Now</a>
+              <form action="moviebooking.php" method="post">
+              <!-- <input type="text" name="movie_id" value="<?php //echo $_SESSION['user_id'];?>" > -->
+                <input type="text" name="movie_id" value="<?php echo $movie['movie_id']?>" hidden >
+               <input type="submit" name="submit" value="Book Now" style="background: #ff7200; border-radius:40px;">
+              </form>
+
             </div>
             <div class="card-footer">
               <!-- Rating stars -->

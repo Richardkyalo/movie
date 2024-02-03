@@ -16,7 +16,7 @@ class signup extends database{
     protected function createUser($email, $password){
         $stmt=$this->connect()->prepare("INSERT INTO users(email,passwords, roles, user_id) values(?,?,?,?);");
         $hasshed_password= password_hash($password, PASSWORD_DEFAULT);
-        $roles="admin";
+        $roles="customer";
 
         function generateRandomString($length = 6)
         {
