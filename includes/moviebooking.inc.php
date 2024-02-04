@@ -6,10 +6,12 @@ include '../controller/book_movie_controller.php';
 if (isset($_POST['ticket_book'])) {
     $name = stripslashes(htmlspecialchars($_POST['name']));
     $phone = stripslashes(htmlspecialchars($_POST['phone']));
-    $selectedSeats = implode(',', $_POST['selected_seats']);
+    $seats = implode(',', $_POST['selected_seats']);
     $theatre = stripslashes(htmlspecialchars($_POST['theatre']));
+    $movie_id=stripslashes(htmlspecialchars($_POST['movie_id']));
 
-
+$book=new book_movie_controller($name, $seats, $theatre, $phone, $movie_id);
+$bookmovie= $book->book_movie();
 
 }
 class userdata {

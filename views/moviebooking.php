@@ -139,8 +139,8 @@ session_start();
         } else {
             $user_id = $_SESSION["user_id"];
         }
-        include "navigationbar.php";
         include('../includes/moviebooking.inc.php');
+        include "navigationbar.php";
         $error = "";
         if (isset($_GET['error'])) {
             $error = $_GET['error'];
@@ -159,8 +159,8 @@ session_start();
         ?>
     </div>
     <div class="row" style="background:linear-gradient(to top, rgba(0, 0, 0, 0.8)50%, rgba(0, 0, 0, 0.8)50%);">
-        <div class="col-sm-12 col-lg-6 col-md-6" style="padding: 20px; text-align:center;">
-            <img src="./images/<?php echo $data1['cover'] ?>" alt="" class="img-fluid custom-img">
+    <div class="col-sm-12 col-lg-4 col-md-4" style="padding: 20px; text-align:center;">
+            <img src="./images/<?php echo $data1['cover'] ?>" style="border-radius:40px;" alt="" class="img-fluid custom-img">
         </div>
         <div class="col-sm-12 col-lg-6 col-md-6" style="text-align:left;">
             <h3 style="color:#ff7200;"><?php echo strtoupper($data1['movie']) ?></h3>
@@ -174,11 +174,13 @@ session_start();
                     <?php echo $data1['rating'] ?> </b>
             </p>
             <p style="color:#fff;"><b>Actor:: <?php echo $data1['actor'] ?></b></p>
-            <button disabled="disabled" style="background:#ff7200; color:#fff;">WELCOME</button>
+            <button disabled="disabled" style="background:#ff7200; color:#fff; border-radius:20px;">WELCOME</button>
         </div>
+    <div class="col-sm-12 col-lg-2 col-md-2"></div>    
     </div>
     <div class="row" style="padding: 25px;">
         <div class="col-sm-12 col-lg-6 col-md-6 mt-3" style="text-align:right;">
+    <h2>Please Select Seat(s) Here</h2>
             <div class="seating-layout">
                 <!-- Sample seating layout with checkboxes -->
                 <?php
@@ -199,7 +201,7 @@ session_start();
         <div class="col-sm-12 col-lg-6 col-md-6 mt-5">
             <div class="form">
                 <h2>Book Your Tickets</h2>
-                <form action="process_booking.php" method="post">
+                <form action="" method="post">
                     <div class="form-group col-lg-12">
                         <label for="name" class="form-group col-lg-12">Your Name:</label><br>
                         <input type="text" id="name" name="name" value="<?php echo $data['firstname'] ?>" class="form-group col-lg-12" required>
@@ -218,7 +220,8 @@ session_start();
                             <!-- Options will be dynamically added using JavaScript -->
                         </select>
                     </div>
-                    <button type="submit" name="ticket_book" class="button col-lg-12">Book Now</button>
+                    <input type="text" name="movie_id" value="<?php echo $movie_id?>" hidden>
+                    <button type="submit" name="ticket_book" style="border-radius: 20px;" class="button col-lg-12">Book Now</button>
                 </form>
             </div>
         </div>
