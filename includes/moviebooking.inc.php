@@ -35,3 +35,10 @@ class theatredata {
         return $theatredetails;
     }
 }
+class seatavailability {
+    public function selectedseats($movie_id){
+        $seats = new customer();
+        $seatsselected= $seats->selected_seats($movie_id);
+        return $seatsselected;
+    }
+}

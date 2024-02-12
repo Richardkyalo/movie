@@ -164,7 +164,7 @@
                                 <p style="color:#ff7200;">*<?= $error ?></p>
                             </div>
                             <div class="input-group mb-3">
-                                <label for="image">Add Movie Cover Pictures</label>
+                                <label for="image">Add Movie Cover Picture</label>
                             </div>
                             <div class="input-group mb-3">
                                 <input type="file" name="image" id="image" value="<?php echo $data1['cover']?>" placeholder="add displays">

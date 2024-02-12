@@ -6,14 +6,14 @@
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="">HOME</a></li>
+                <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="home.php">HOME</a></li>
                 <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="#">THEATRES</a></li>
                 <!-- <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="#">MOVIES</a></li>
                 <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="#">UPCOMING MOVIES</a></li> -->
                 <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="#">ABOUT</a></li>
                 <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="#">SERVICES</a></li>
                 <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="logout.php">LOGOUT</a></li>
-                <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="#">PROFILE</a></li>
+                <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="userprofile.php">PROFILE</a></li>
                 <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="#">CONTACT</a></li>
                 <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="#">HELP</a></li>
                 <!-- <li>

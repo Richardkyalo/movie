@@ -82,6 +82,49 @@ class customer extends database {
             return false;
         }
     }
+    public function selected_seats($movie_id){
+        try{
+            $query = $this->connect()->prepare("SELECT * FROM booked_movies WHERE movie_id=?");
+            $query->execute([$movie_id]);
+            $result = $query->fetch(PDO::FETCH_ASSOC);
+            $query=null;
+            return $result;
+        } catch (PDOException $e) {
+            error_log("PDOException". $e->getMessage());
+            var_dump($e);
+        }
+    }
+    public function updateUserDetails($firstname,$secondname,$address,$town,$street, $phone, $email, $user_id){
+   
+        $stmt = $this->connect()->prepare("UPDATE users SET firstname = ?, secondname = ?,
+        address = ?, town = ?, street = ?,  phone = ?,  email = ? WHERE user_id = ?");
+        try{
+           $result = $stmt->execute([$firstname, $secondname, $address, $town, $street, $phone, $email, $user_id]);
+           $stmt = null; // Close the statement to free up resources
+           header("Location:./userprofile.php? error= successfuly updated your details.");
+        }catch(PDOException $e) {
+           echo "Error: " . $e->getMessage();
+        }
+
+
+       return $result;
+   
+    }
+    public function updateImage($uploadedFile, $user_id) {
+       
+        $stmt = $this->connect()->prepare("UPDATE users SET profiles = ? WHERE user_id = ?");
+        try{
+           $result = $stmt->execute([$uploadedFile, $user_id]);
+           $stmt = null; // Close the statement to free up resources
+           header("Location:../views/userprofile.php? error= successfuly updated your details.");
+        }catch(PDOException $e) {
+           echo "Error: " . $e->getMessage();
+        }
+
+
+       return $result;
+    
+    }
     
     
 }

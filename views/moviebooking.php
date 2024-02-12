@@ -45,6 +45,18 @@ session_start();
         font-weight: bold;
         cursor: pointer;
     }
+    .seats {
+        width: 50px;
+        height: 50px;
+        background-color: #ff7200;
+        border: 1px solid #aaa;
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        cursor: pointer;
+    }
 
     .seat.selected {
         background-color: #ff7200;
@@ -156,10 +168,29 @@ session_start();
         $theatrename = $data1['theatre'];
         $theatredetail = new theatredata();
         $data2 = $theatredetail->gettheatredata($theatrename);
+
+        $theatreseats = new seatavailability();
+        $data3 = $theatreseats->selectedseats($movie_id);
+        $seats = $data3['seats'];
+        $allSelectedSeatsArray = explode(',', $seats);
+        //    $seatsArray = array_column($data3, 'seats');
+        // $seatno="seat94";
+        // if (in_array('seat96', $allSelectedSeatsArray)) {
+        //     echo "seat96 is contained in the array.";
+        // } else {
+        //     echo "seat96 is not contained in the array.";
+        // }
+        //        $allSelectedSeats = implode(',', $seatsArray);
+
+        // // Convert the combined string into an array of seat numbers
+        //        $allSelectedSeatsArray = explode(',', $allSelectedSeats);
+        //        echo $allSelectedSeatsArray;
+        //        var_dump($allSelectedSeatsArray);
+
         ?>
     </div>
     <div class="row" style="background:linear-gradient(to top, rgba(0, 0, 0, 0.8)50%, rgba(0, 0, 0, 0.8)50%);">
-    <div class="col-sm-12 col-lg-4 col-md-4" style="padding: 20px; text-align:center;">
+        <div class="col-sm-12 col-lg-4 col-md-4" style="padding: 20px; text-align:center;">
             <img src="./images/<?php echo $data1['cover'] ?>" style="border-radius:40px;" alt="" class="img-fluid custom-img">
         </div>
         <div class="col-sm-12 col-lg-6 col-md-6" style="text-align:left;">
@@ -176,11 +207,11 @@ session_start();
             <p style="color:#fff;"><b>Actor:: <?php echo $data1['actor'] ?></b></p>
             <button disabled="disabled" style="background:#ff7200; color:#fff; border-radius:20px;">WELCOME</button>
         </div>
-    <div class="col-sm-12 col-lg-2 col-md-2"></div>    
+        <div class="col-sm-12 col-lg-2 col-md-2"></div>
     </div>
     <div class="row" style="padding: 25px;">
         <div class="col-sm-12 col-lg-6 col-md-6 mt-3" style="text-align:right;">
-    <h2>Please Select Seat(s) Here</h2>
+            <h2>Please Select Seat(s) Here</h2>
             <div class="seating-layout">
                 <!-- Sample seating layout with checkboxes -->
                 <?php
@@ -188,13 +219,25 @@ session_start();
                 $total_seats = $data2['seats'];
                 for ($i = 0; $i < $total_seats; $i++) {
                     $count = $count + 1;
+                    $usedseat = "seat" . $count;
+
+                    if (in_array($usedseat, $allSelectedSeatsArray)) {
+                        // echo $usedseat;
                 ?>
-                    <div class="seat">
-                        <input type="checkbox" id="seat<?php echo $count ?>" class="seat-checkbox">
-                        <label for="seat<?php echo  $count ?>"><?php echo $count ?></label>
-                    </div><?php
-                        }
-                            ?>
+                        <div class="seat">
+                            <input type="checkbox" id="seat<?php echo $count ?>" class="seat-checkbox" disabled>
+                            <label for="seat<?php echo  $count ?>"><?php echo $count ?></label>
+                        </div>
+                    <?php } else { ?>
+                        <div class="seats">
+                            <input type="checkbox" id="seat<?php echo $count ?>" class="seat-checkbox">
+                            <label for="seat<?php echo  $count ?>"><?php echo $count ?></label>
+                        </div>
+                    <?php }
+                    ?>
+                <?php
+                }
+                ?>
                 <!-- Add more seats as needed -->
             </div>
         </div>
@@ -220,7 +263,7 @@ session_start();
                             <!-- Options will be dynamically added using JavaScript -->
                         </select>
                     </div>
-                    <input type="text" name="movie_id" value="<?php echo $movie_id?>" hidden>
+                    <input type="text" name="movie_id" value="<?php echo $movie_id ?>" hidden>
                     <button type="submit" name="ticket_book" style="border-radius: 20px;" class="button col-lg-12">Book Now</button>
                 </form>
             </div>

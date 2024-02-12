@@ -142,7 +142,7 @@
   </div>
 
   <!-- Latest Movies Section -->
-  <div class="" style="background: #fff;">
+  <div class="row" style="background: #fff;">
     <br>
     <h2 style="color: #000; text-align:center;">Playing Soon In Our Theatres</h2>
     <div class="card-group">
@@ -182,6 +182,21 @@
         }
       }
       ?> <!-- Add more cards with the same structure -->
+    </div>
+  </div>
+  <div class="row" style="background:#fff;">
+    <div class="col-sm-12 col-lg-6 col-md-6 mt-5 px-5">
+      <p style="color: black; font-weight: bold;  font-size: 40px; font-family: 'Times New Roman', Times, serif;">See what is new</p>
+      <p style="color: black;  font-size: 20px; font-family: 'Times New Roman', Times, serif;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br>
+      Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<br> 
+      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris <br>
+      nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor <br>
+      in reprehenderit in voluptate velit esse cillum dolore eu <br>
+      fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, <br>
+      sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12 mt-5 ">
+      <img src="./images/movielogo.jpg" alt="" class="img-fluid">
     </div>
   </div>
 
