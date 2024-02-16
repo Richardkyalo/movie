@@ -17,6 +17,7 @@ class login extends database
             if (password_verify($password, $hashed_password)) {
                 // Set session variables
                 $_SESSION['email'] = $data["email"];
+                $_SESSION["roles"] = $data["roles"];
                 $_SESSION['user_id']=$data["user_id"];
                 $_SESSION["login"] = "OK";
 
@@ -27,7 +28,7 @@ class login extends database
                     header("location:../views/home.php");
                 } 
                 elseif ($roles = "employees") {
-                    header("location:../views/home.php");
+                    header("location:../views/employeehome.php");
                 }
             } else {
                 header("Location:../views/login.php? error=invalid details.");

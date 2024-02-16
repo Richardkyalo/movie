@@ -39,7 +39,7 @@ class Add_theatre_controller extends add_theatre
     private function image_size($input)
     {
         $response = "";
-        if ($input > 6000000) {
+        if ($input < 6000000) {
             $response = false;
         } else {
             $response = true;

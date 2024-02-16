@@ -56,6 +56,21 @@ class add_movie extends database
         $stmt = null;
         return $all_movies;
     }
+    public function get_all_theatres()
+    {
+        $stmt = $this->connect()->prepare("SELECT * FROM theatres");
+        $stmt->execute();
+        $all_movies = $stmt->fetchALL(PDO::FETCH_ASSOC);
+        $stmt = null;
+        return $all_movies;
+    }
+    public function get_all_employeedetail($user_id){
+        $stmt = $this->connect()->prepare("SELECT theatre FROM users WHERE user_id=?");
+        $stmt->execute([$user_id]);
+        $employeedetail = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt = null;
+        return $employeedetail;
+    }
     public function get_movie($movie)
     {
         $stmt = $this->connect()->prepare("SELECT * FROM movies WHERE movie=?");

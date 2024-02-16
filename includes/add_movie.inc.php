@@ -49,4 +49,14 @@ class movies {
         $movies = $movie->get_all_movies();
         return $movies;
     }
+    public function get_theatres() {
+        $theatre =new add_movie();
+        $theatres=$theatre->get_all_theatres();
+        return $theatres;
+    }
+    public function get_employeedetail($user_id){
+        $employeedetail = new add_movie();
+        $employeetheatre=$employeedetail->get_all_employeedetail($user_id);
+        return $employeetheatre;
+    }
 }

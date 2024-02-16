@@ -151,8 +151,8 @@ session_start();
         } else {
             $user_id = $_SESSION["user_id"];
         }
-        include('../includes/moviebooking.inc.php');
-        include "navigationbar.php";
+        include('../includes/moviebookingemployee.inc.php');
+        include "employeenavigation.php";
         $error = "";
         if (isset($_GET['error'])) {
             $error = $_GET['error'];
@@ -247,11 +247,11 @@ session_start();
                 <form action="" method="post">
                     <div class="form-group col-lg-12">
                         <label for="name" class="form-group col-lg-12">Your Name:</label><br>
-                        <input type="text" id="name" name="name" value="<?php echo $data['firstname'] ?>" class="form-group col-lg-12" required>
+                        <input type="text" id="name" name="name" value="<?php //echo $data['firstname'] ?>" class="form-group col-lg-12" required>
                     </div>
                     <div class="form-group col-lg-12">
                         <label for="phone" class="form-group col-lg-12">Your Phone Number:</label><br>
-                        <input type="text" id="" class="form-group col-lg-12" name="phone" value="<?php echo $data['phone'] ?>" required>
+                        <input type="text" id="" class="form-group col-lg-12" name="phone" value="<?php //echo $data['phone'] ?>" required>
                     </div>
                     <div class="form-group col-lg-12">
                         <label for="theatre" class="form-group col-lg-12">Theatre:</label><br>

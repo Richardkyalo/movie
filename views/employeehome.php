@@ -108,13 +108,17 @@
   <!-- Navbar -->
   <?php 
   session_start();
-  include  ("navigationbar.php");
+  include  ("employeenavigation.php");
   include("../includes/add_movie.inc.php");
+  $user_id=$_SESSION['user_id'];
   $data = new movies();
   $movies = $data->get_movies();
 
   $data1=new movies;
   $theatres= $data1->get_theatres();
+
+  $data2=new movies;
+  $employeedetail= $data2->get_employeedetail($user_id);
   ?>
 
 </div>
@@ -149,18 +153,22 @@
   <!-- Latest Movies Section -->
   <div class="row" style="background: #fff;">
     <br>
-    <h2 style="color: #000; text-align:center;">Playing Soon In Our Theatres</h2>
-    <div class="card-group">
-      <?php if (!empty($movies)) {
+    <h2 style="color: #000; text-align:center; font-family: 'Times New Roman', Times, serif;"><u>Book a Movie Ticket For Customer</u></h2>
 
+    <div class="card-group">
+
+      <?php if (!empty($movies)) {
+        $employeetheatre=$employeedetail['theatre'];
         foreach ($movies as $movie) {
+          $moviettheatre=$movie['theatre'];
+          if ($moviettheatre==$employeetheatre) {
       ?>
           <div class="card" style="width: 18rem;">
             <img src="./images/<?php echo $movie['cover']; ?>" class="card-img-top" alt="Movie 1">
             <div class="card-body">
               <h5 class="card-title">Tittle :  <?php echo strtoupper($movie['movie'])?></h5>
               <!-- <p class="card-text"><?php //echo $movie['movie_description'];?></p> -->
-              <form action="moviebooking.php" method="post">
+              <form action="moviebookingemployee.php" method="post">
               <!-- <input type="text" name="movie_id" value="<?php //echo $_SESSION['user_id'];?>" > -->
                 <input type="text" name="movie_id" value="<?php echo $movie['movie_id']?>" hidden >
                <input type="submit" name="submit" value="Book Now" style="background: #ff7200; border-radius:40px;">
@@ -186,6 +194,7 @@
       <?php
         }
       }
+    }
       ?> <!-- Add more cards with the same structure -->
     </div>
   </div>
@@ -203,36 +212,6 @@
     <div class="col-lg-6 col-md-6 col-sm-12 mt-5 ">
       <img src="./images/movielogo.jpg" alt="" class="img-fluid">
     </div>
-  </div>
-  <div class="row" style="background: #fff;">
-  <h2 style="color: #000; text-align:center; font-family: 'Times New Roman', Times, serif;"><u>Take a Look on Our Theatres</u></h2>
-  <?php 
-  if(!empty($theatres)) {
-    foreach ($theatres as $theatre) {
-  ?>
-  <div class="col-lg-6 col-sm-12 col-md-6">
-  <div class="card mb-3" style="max-width: 540px;">
-  <div class="row g-0">
-    <div class="col-md-4">
-      <img src="./images/<?php echo $theatre['display']; ?>" class="img-fluid rounded-start" alt="...">
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title"><?php echo  strtoupper($theatre['theatre_name'])." "."THEATRE"?></h5>
-        <p class="card-text" style="font-family: 'Times New Roman', Times, serif;"> <span style="color:#ff7200;"><?php echo  strtoupper($theatre['theatre_name']) ?> </span>is located at <?php echo $theatre['county'] ?> County
-        , <?php echo $theatre['town'] ?> Town, <?php echo $theatre['streat']?> Street. <br>
-       It has a capacity of <?php echo $theatre['seats']?> Seats
-      </p>
-        <p class="card-text"><small class="text-body-secondary">WELCOME TO <?php echo  strtoupper($theatre['theatre_name']) ?> AND LETS ENJOY TOGETHER</small></p>
-      </div>
-    </div>
-  </div>
-</div>
-  </div>
-  <?php
-    }
-  }
-  ?>
   </div>
 
   <!-- Footer -->
