@@ -19,6 +19,7 @@ class login extends database
                 $_SESSION['email'] = $data["email"];
                 $_SESSION["roles"] = $data["roles"];
                 $_SESSION['user_id']=$data["user_id"];
+                $_SESSION['profiles']=$data["profiles"];
                 $_SESSION["login"] = "OK";
 
                 if ($roles === "admin") {

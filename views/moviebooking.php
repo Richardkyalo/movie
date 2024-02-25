@@ -171,8 +171,11 @@ session_start();
 
         $theatreseats = new seatavailability();
         $data3 = $theatreseats->selectedseats($movie_id);
-        $seats = $data3['seats'];
+        $allSelectedSeatsArray=[];
+        if(!empty($data3)){
+            $seats = $data3['seats'];
         $allSelectedSeatsArray = explode(',', $seats);
+        }
         //    $seatsArray = array_column($data3, 'seats');
         // $seatno="seat94";
         // if (in_array('seat96', $allSelectedSeatsArray)) {

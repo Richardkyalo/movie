@@ -39,7 +39,6 @@ class book_movie_controller extends customer
             exit();
         }else {
             $this->book_a_movie($this->name, $this->seats, $this->theatre, $this->phone, $this->movie_id);
-           
             exit();
         }
     }

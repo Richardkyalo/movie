@@ -110,6 +110,17 @@
   session_start();
   include  ("navigationbar.php");
   include("../includes/add_movie.inc.php");
+  $email = $_SESSION['email'];
+  if (!isset($email)) {
+    header("Location: login.php");
+    exit();
+}
+$error="";
+if (isset($_GET['error'])) {
+  $error = $_GET['error'];
+} else {
+  $error = "";
+}
   $data = new movies();
   $movies = $data->get_movies();
 
@@ -133,6 +144,9 @@
     </div>
   </div>
   <div class="row" style="background: #fff;">
+  <div class="row" style="padding-left: 50px; color:#ff7200;">
+  <?php echo $error ?>
+  </div>
     <div class="col-sm-12 col-lg-6 col-md-6 mt-5" style="padding: 50px;">
       <br>
       <p style="color: black; font-weight: bold;  font-size: 40px;">It has never been easier to <br>watch free movies online.</p>
@@ -149,7 +163,7 @@
   <!-- Latest Movies Section -->
   <div class="row" style="background: #fff;">
     <br>
-    <h2 style="color: #000; text-align:center;">Playing Soon In Our Theatres</h2>
+    <h2 style="color: #000; text-align:center; font-family: 'Times New Roman', Times, serif;"><u>Playing Soon In Our Theatres</u> </h2>
     <div class="card-group">
       <?php if (!empty($movies)) {
 
@@ -158,7 +172,7 @@
           <div class="card" style="width: 18rem;">
             <img src="./images/<?php echo $movie['cover']; ?>" class="card-img-top" alt="Movie 1">
             <div class="card-body">
-              <h5 class="card-title">Tittle :  <?php echo strtoupper($movie['movie'])?></h5>
+              <h5 class="card-title" style="font-size: 15px;">Tittle :  <?php echo strtoupper($movie['movie'])?></h5>
               <!-- <p class="card-text"><?php //echo $movie['movie_description'];?></p> -->
               <form action="moviebooking.php" method="post">
               <!-- <input type="text" name="movie_id" value="<?php //echo $_SESSION['user_id'];?>" > -->
@@ -176,7 +190,7 @@
                 echo '<span class="fa fa-star checked" style="color:gold;"></span>';
                 }
                 ?>
-                IMDB::<?php 
+                <br>IMDB::<?php 
                 echo $movie['rating'];
                 ?>
               </div>
