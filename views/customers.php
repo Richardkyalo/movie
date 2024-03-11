@@ -14,7 +14,6 @@
 <style>
     .table {
         background: linear-gradient(to top, rgba(0, 0, 0, 0.8)50%, rgba(0, 0, 0, 0.8)50%);
-        transform: translate(0%, -5%);
         border-radius: 10px;
         border: 1px solid #ff7200;
         ;
@@ -54,12 +53,11 @@
             <a href="addemployee.php" class="btn shadow-sm text-dark" style="background-color: #ff7200;">ADD EMPLOYEE</a>
         </div>
     </div> -->
-    <div class="row">
-        <br><br><br>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <table class="table table-hover table-bordered">
+
+    <div class="container">
+        <div class="col-12 table-responsive">
+            <table class="table table-hover table-bordered caption-top">
+  <caption style="color:#ff7200; font-family:'Times New Roman', Times, serif; font-weight:bold; font-size:30px;">List of Customers</caption>
                 <thead>
                     <tr>
                         <th style="text-align: right;">#NUMBER</th>

@@ -35,7 +35,15 @@ class Add_theatre_controller extends add_theatre
     {
         return !$this->checkTheatre($this->theatre_name);
     }
-
+    private function modulo(){
+        $response="";
+        if($this->seats%11==0){
+            $response=true;
+        }else{
+            $response=false;
+        }
+        return $response;
+    }
     private function image_size($input)
     {
         $response = "";
@@ -67,7 +75,10 @@ class Add_theatre_controller extends add_theatre
             header("Location: " . $this->path . "?error=All fields are required");
             exit();
         }
-
+        if ($this->modulo()==false) {
+            header("Location: " . $this->path . "?error=seats should be a multiple of 11");
+            exit();
+        }
         if (!$this->image_size($this->image)) {
             header("Location: " . $this->path . "?error=Wrong file size");
             exit();

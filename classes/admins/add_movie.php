@@ -64,7 +64,8 @@ class add_movie extends database
         $stmt = null;
         return $all_movies;
     }
-    public function get_all_employeedetail($user_id){
+    public function get_all_employeedetail($user_id)
+    {
         $stmt = $this->connect()->prepare("SELECT theatre FROM users WHERE user_id=?");
         $stmt->execute([$user_id]);
         $employeedetail = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -115,6 +116,35 @@ class add_movie extends database
             }
         } catch (PDOException $e) {
             echo "Error" . $e->getMessage();
+        }
+    }
+    public function getRecomendations($email)
+    {
+        $stmt = $this->connect()->prepare("SELECT firstname FROM users WHERE email=?");
+        $stmt->execute([$email]);
+        if ($stmt->rowCount() > 0) {
+            $firstname = $stmt->fetch(PDO::FETCH_ASSOC)['firstname'];
+            $query = $this->connect()->prepare("SELECT * FROM bookings WHERE name=?");
+            $query->execute([$firstname]);
+            if ($query->rowCount() > 0) {
+                $data = $query->fetchALL(PDO::FETCH_ASSOC);
+                $ratings = array();
+                foreach ($data as $data1) {
+                    $movieid = $data1['movie_id'];
+                    $statement = $this->connect()->prepare("SELECT rating FROM movies WHERE movie_id=?");
+                    $statement->execute([$movieid]);
+                    $rating = $statement->fetch(PDO::FETCH_ASSOC)['rating']; // Fix here
+                    if ($rating !== false) {
+                        $ratings[] = $rating;
+                    }
+                }
+                $average_rating = count($ratings) > 0 ? array_sum($ratings) / count($ratings) : 0;
+                $recommendation_query = $this->connect()->prepare("SELECT * FROM movies WHERE rating > ?");
+                $recommendation_query->execute([$average_rating]);
+                $recommendations = $recommendation_query->fetchAll(PDO::FETCH_ASSOC);
+
+                return $recommendations;
+            }
         }
     }
 }

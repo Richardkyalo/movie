@@ -1,12 +1,18 @@
 <?php
-require_once '../vendor/autoload.php'; // Include autoloader for Dompdf
+require_once '../vendor/autoload.php'; 
 
-// Retrieve data from GET parameters
-$name = $_GET['name'];
-$age = $_GET['age'];
-$email = $_GET['email'];
+$name = $_GET['name'] ?? '';
+$phone = $_GET['phone'] ?? '';
+$movie_id = $_GET['movie_id'] ?? '';
+$seats = $_GET['seats'] ?? '';
+$totalamount = $_GET['totalamount'] ?? '';
+$date = $_GET['date'] ?? '';
+$time = $_GET['time'] ?? '';
+$moviename = $_GET['moviename'] ?? '';
 
-// Generate ticket details HTML
+$formattedDate = date("F j, Y", strtotime($date)); 
+$formattedTime = date("g:i A", strtotime($time)); 
+
 $html = '
 <style>
     .table1 {
@@ -21,11 +27,11 @@ $html = '
     }
     .table1 th {
         background-color: #f2f2f2;
-        color: #333;
+        color:#ff7200;
+        
     }
     .ticket {
-        width: 500px;
-        padding: 20px;
+        width: 100%;
         border: 2px solid #000;
         border-radius: 10px;
         background-color: #f5f5f5;
@@ -48,7 +54,7 @@ $html = '
     }
     footer p {
         font-size: 12px;
-        color: #777;
+        color: #ff7200;
     }
 </style>
 <div class="ticket">
@@ -59,43 +65,38 @@ $html = '
                 <th>Name</th>
                 <th>Phone Number</th>
                 <th>Movie ID</th>
+                <th>Movie Name</th>
+                <th>Seats</th>
+                <th>Amount</th>
                 <th>Date and Time</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td>' . $name . '</td>
-                <td>' . $age . '</td>
-                <td>' . $email . '</td>
-                <td>2024-02-24 18:00</td>
+                <td>' . $phone . '</td>
+                <td>' . $movie_id . '</td>
+                <td>' . $moviename . '</td>
+                <td>' . $seats . '</td>
+                <td>' . $totalamount . '</td>
+                <td>' . $formattedDate . ' at ' . $formattedTime . '</td>
             </tr>
-            <!-- Add more rows for additional booking details -->
         </tbody>
     </table>
-</div>
-<footer>
+    <footer>
     <p>@copyright.RK Movie Theatres</p>
-</footer>';
+</footer>
+</div>
+'; 
 
-// Width and height of the ticket in pixels
-$ticketWidth = 500;
-$ticketHeight = 250;
+$ticketWidth = 600;
+$ticketHeight = 300;
 
-// Setup Dompdf
 $dompdf = new Dompdf\Dompdf();
 $dompdf->loadHtml($html);
 
-// Set paper size based on ticket dimensions (add margins if needed)
 $dompdf->setPaper(array(0, 0, $ticketWidth + 20, $ticketHeight + 20));
 
-// Render PDF (output)
 $dompdf->render();
 
-// Optionally, you can add meta information to the PDF
-$dompdf->addInfo("Title", "RK Movie Theatres");
-$dompdf->addInfo("Author", "RK Movie Theatres");
-$dompdf->addInfo("Subject", "Booking Ticket");
-$dompdf->addInfo("Keywords", "movie, theatre, booking");
-
-// Output PDF
 $dompdf->stream('booking_ticket.pdf', array('Attachment' => 0));

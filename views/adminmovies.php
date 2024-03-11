@@ -14,7 +14,6 @@
 <style>
     .table {
         background: linear-gradient(to top, rgba(0, 0, 0, 0.8)50%, rgba(0, 0, 0, 0.8)50%);
-        transform: translate(0%, -5%);
         border-radius: 10px;
         border: 1px solid #ff7200;
         ;
@@ -57,10 +56,11 @@
                 </a>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12">
+        <div class="container">
+            <div class="col-12 table-responsive">
                 <div style="color: #ff7200;">*<?php echo $error?></div>
-                <table class="table table-hover table-bordered mt-4">
+                <table class="table table-hover table-bordered caption-top">
+  <caption style="color:#ff7200; font-family:'Times New Roman', Times, serif; font-weight:bold; font-size:30px;">List of Movies</caption>
                     <thead>
 
                         <tr>
@@ -120,7 +120,11 @@
                             </tr>
                 </table>
                 <!-- Your table code remains the same -->
-
+                <form action="tablemovies.php">
+                <?php $_SESSION['tableData'] = serialize($movie);
+                ?>
+                <button type="submit" style="color: #fff; background-color:#000;" name="submit">Download</button>
+            </form>
                 <!-- Modal for Update -->
                 <div class="modal" id="updateModal">
                     <div class="modal-dialog">

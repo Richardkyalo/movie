@@ -126,6 +126,9 @@ if (isset($_GET['error'])) {
 
   $data1=new movies;
   $theatres= $data1->get_theatres();
+
+  $recomendation=new movies();
+  $recomended_movies=$recomendation->getbookedMovies($email);
   ?>
 
 </div>
@@ -159,50 +162,121 @@ if (isset($_GET['error'])) {
       <img src="./images/site.jpg" alt="" class="img-fluid">
     </div>
   </div>
+<!--recomendation engine-->
+
+<div class="row" style="background: #fff;">
+    <br>
+    <?php if (!empty($recomended_movies)) { ?>
+    <h2 style="color: #000; text-align:center; font-family: 'Times New Roman', Times, serif;"><u>Some Of The Upcoming And Recommended Movies</u> </h2>
+<?php
+        $count = 0; // Initialize a counter
+        foreach ($recomended_movies as $movie) {
+            if ($count % 6 == 0) { // Start a new row for every 3 cards
+                echo '<div class="row">';
+            }
+    ?>
+            <div class="col-lg-2 col-md-2 col-sm-12 col-12" >
+                <div class="card" >
+                    <img src="./images/<?php echo $movie['cover']; ?>" class="card-img-top" alt="Movie 1">
+                    <div class="card-body">
+                        <h5 class="card-title" style="font-size: 15px;">Title: <?php echo strtoupper($movie['movie'])?></h5>
+                        <form action="moviebooking.php" method="post">
+                            <input type="text" name="movie_id" value="<?php echo $movie['movie_id']?>" hidden>
+                            <input type="submit" name="submit" value="Book Now" style="background: #ff7200; border-radius:40px;">
+                        </form>
+                    </div>
+                    <div class="card-footer">
+                        <!-- Rating stars -->
+                        <div class="rating">
+                            <?php
+$rating = round($movie['rating'] / 2); 
+for ($i = 1; $i <= 5; $i++) { 
+    if ($i <= $rating) { 
+        echo '<span class="fa fa-star checked" style="color:gold;"></span>';
+    } else {
+        echo '<span class="fa fa-star" style="color:gold;"></span>';
+    }
+}
+
+                            ?>
+                            <br>IMDB: <?php 
+                            echo $movie['rating'];
+                            ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <?php
+            $count++; // Increment the counter
+            if ($count % 6 == 0) { // Close the row after every 3 cards
+                echo '</div>';
+            }
+        }
+        if ($count % 6 != 0) { // Close the row if the number of cards is not a multiple of 3
+            echo '</div>';
+        }
+    }
+    ?>
+</div>
+
 
   <!-- Latest Movies Section -->
   <div class="row" style="background: #fff;">
     <br>
     <h2 style="color: #000; text-align:center; font-family: 'Times New Roman', Times, serif;"><u>Playing Soon In Our Theatres</u> </h2>
-    <div class="card-group">
-      <?php if (!empty($movies)) {
-
+    <?php if (!empty($movies)) {
+        $count = 0; // Initialize a counter
         foreach ($movies as $movie) {
-      ?>
-          <div class="card" style="width: 18rem;">
-            <img src="./images/<?php echo $movie['cover']; ?>" class="card-img-top" alt="Movie 1">
-            <div class="card-body">
-              <h5 class="card-title" style="font-size: 15px;">Tittle :  <?php echo strtoupper($movie['movie'])?></h5>
-              <!-- <p class="card-text"><?php //echo $movie['movie_description'];?></p> -->
-              <form action="moviebooking.php" method="post">
-              <!-- <input type="text" name="movie_id" value="<?php //echo $_SESSION['user_id'];?>" > -->
-                <input type="text" name="movie_id" value="<?php echo $movie['movie_id']?>" hidden >
-               <input type="submit" name="submit" value="Book Now" style="background: #ff7200; border-radius:40px;">
-              </form>
+            if ($count % 6 == 0) { // Start a new row for every 3 cards
+                echo '<div class="row">';
+            }
+    ?>
+            <div class="col-lg-2 col-md-2 col-sm-12 col-12" >
+                <div class="card" >
+                    <img src="./images/<?php echo $movie['cover']; ?>" class="card-img-top" alt="Movie 1">
+                    <div class="card-body">
+                        <h5 class="card-title" style="font-size: 15px;">Title: <?php echo strtoupper($movie['movie'])?></h5>
+                        <form action="moviebooking.php" method="post">
+                            <input type="text" name="movie_id" value="<?php echo $movie['movie_id']?>" hidden>
+                            <input type="submit" name="submit" value="Book Now" style="background: #ff7200; border-radius:40px;">
+                        </form>
+                    </div>
+                    <div class="card-footer">
+                        <!-- Rating stars -->
+                        <div class="rating">
+                            <?php
+$rating = round($movie['rating'] / 2); 
+for ($i = 1; $i <= 5; $i++) { 
+    if ($i <= $rating) { 
+        echo '<span class="fa fa-star checked" style="color:gold;"></span>';
+    } else {
+        echo '<span class="fa fa-star" style="color:gold;"></span>';
+    }
+}
 
+                            ?>
+                            <br>IMDB: <?php 
+                            echo $movie['rating'];
+                            ?>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="card-footer">
-              <!-- Rating stars -->
-              <div class="rating">
-                <?php
-                $rating= $movie['rating'];
-               for ($i = 1; $i <= $rating; $i++) {
-                echo '<span class="fa fa-star checked" style="color:gold;"></span>';
-                }
-                ?>
-                <br>IMDB::<?php 
-                echo $movie['rating'];
-                ?>
-              </div>
-            </div>
-          </div>
-
-      <?php
+    <?php
+            $count++; // Increment the counter
+            if ($count % 6 == 0) { // Close the row after every 3 cards
+                echo '</div>';
+            }
         }
-      }
-      ?> <!-- Add more cards with the same structure -->
-    </div>
-  </div>
+        if ($count % 6 != 0) { // Close the row if the number of cards is not a multiple of 3
+            echo '</div>';
+        }
+    }
+    ?>
+</div>
+
+
+
   <div class="row fluid" style="background:#fff;">
     <div class="col-sm-12 col-lg-6 col-md-6 mt-5 px-5">
       <p style="color: black; font-weight: bold;  font-size: 40px; font-family: 'Times New Roman', Times, serif;">See what is new</p>

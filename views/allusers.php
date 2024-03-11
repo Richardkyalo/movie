@@ -14,10 +14,9 @@
 <style>
     .table {
         background: linear-gradient(to top, rgba(0, 0, 0, 0.8)50%, rgba(0, 0, 0, 0.8)50%);
-        transform: translate(0%, -5%);
+        /* transform: translate(0%, -5%); */
         border-radius: 10px;
         border: 1px solid #ff7200;
-        ;
         text-align: center;
         color: #fff;
         font-size: 15px;
@@ -54,12 +53,12 @@
             <a href="addemployee.php" class="btn shadow-sm text-dark" style="background-color: #ff7200;">ADD EMPLOYEE</a>
         </div>
     </div> -->
-    <div class="row">
-        <br><br><br>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <table class="table table-hover table-bordered">
+ 
+    <div class="container">
+        <div class="table-responsive">
+        <table class="table table-hover table-bordered caption-top">
+  <caption style="color:#ff7200; font-family:'Times New Roman', Times, serif; font-weight:bold; font-size:30px;">List of users</caption>
+            
                 <thead>
                     <tr>
                         <th style="text-align: right;">#NUMBER</th>
@@ -75,7 +74,8 @@
                     $count = 0;
                     foreach ($users as $user) {
                 ?>
-                        <tr>
+                <tbody>
+                <tr>
                             <td style="text-align: right;">
                                 <?php $count = $count + 1;
                                 echo $count;
@@ -122,6 +122,7 @@
                 }
                     ?>
                         </tr>
+                </tbody>
             </table>
         </div>
     </div>

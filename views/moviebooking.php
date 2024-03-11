@@ -1,9 +1,9 @@
 <?php
+ob_start();
 session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,6 +20,7 @@ session_start();
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <style>
     .seating-layout {
         display: grid;
@@ -32,8 +33,82 @@ session_start();
         /* or contain, depending on your preference */
     }
 
-
     .seat {
+        width: 50px;
+        height: 50px;
+        background-color: #fff;
+        border: 1px solid #aaa;
+        /* border-radius: 5px; */
+        /* background-color: #444451;
+  height: 26px;
+  width: 32px;
+  margin: 3px; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    .seat.selected {
+        background-color: #ff7200;
+    }
+
+    .showcase {
+        background: rgba(0, 0, 0, 0.1);
+        padding: 0% 40% 0% 30%;
+        border-radius: 5px;
+        color: #777;
+        list-style-type: none;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .showcase li {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 10px;
+    }
+
+    .showcase li small {
+        margin-left: 2px;
+        font-family: 'Times New Roman', Times, serif;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    .screen {
+        background-color: #fff;
+        height: 120px;
+        width: 50%;
+        margin: 0% 25% 0% 25%;
+        transform: rotateX(-48deg);  
+        box-shadow: 0 50px 50px rgba(168, 170, 168, 0.7);
+
+    }
+
+    .container {
+        perspective: 1000px;
+        margin-bottom: 30px;
+    }
+
+
+    .rowk {
+        display: flex;
+        margin: 0% 10% 0% 10%;
+    }
+
+    .seat:nth-of-type(2) {
+        margin-right: 10%;
+    }
+
+    .seat:nth-last-of-type(2) {
+        margin-left: 10%;
+    }
+
+    /* .seat {
         width: 50px;
         height: 50px;
         background-color: #ddd;
@@ -44,8 +119,25 @@ session_start();
         align-items: center;
         font-weight: bold;
         cursor: pointer;
-    }
-    .seats {
+    } */
+
+    /* .seats {
+        width: 50px;
+        height: 50px;
+        background-color: #fff;
+        border: 1px solid #aaa; */
+        /* border-radius: 5px; */
+        /* background-color: #444451;
+  height: 26px;
+  width: 32px;
+  margin: 3px; */
+        /* display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        
         width: 50px;
         height: 50px;
         background-color: #ff7200;
@@ -56,12 +148,12 @@ session_start();
         align-items: center;
         font-weight: bold;
         cursor: pointer;
-    }
+    } */
 
-    .seat.selected {
+    /* .seat.selected {
         background-color: #ff7200;
         color: #fff;
-    }
+    } */
 
     /* body{
         background: linear-gradient(to top, rgba(0, 0, 0, 0.8)50%, rgba(0, 0, 0, 0.8)50%);
@@ -171,10 +263,10 @@ session_start();
 
         $theatreseats = new seatavailability();
         $data3 = $theatreseats->selectedseats($movie_id);
-        $allSelectedSeatsArray=[];
-        if(!empty($data3)){
+        $allSelectedSeatsArray = [];
+        if (!empty($data3)) {
             $seats = $data3['seats'];
-        $allSelectedSeatsArray = explode(',', $seats);
+            $allSelectedSeatsArray = explode(',', $seats);
         }
         //    $seatsArray = array_column($data3, 'seats');
         // $seatno="seat94";
@@ -212,39 +304,65 @@ session_start();
         </div>
         <div class="col-sm-12 col-lg-2 col-md-2"></div>
     </div>
-    <div class="row" style="padding: 25px;">
-        <div class="col-sm-12 col-lg-6 col-md-6 mt-3" style="text-align:right;">
-            <h2>Please Select Seat(s) Here</h2>
-            <div class="seating-layout">
-                <!-- Sample seating layout with checkboxes -->
-                <?php
-                $count = 0;
-                $total_seats = $data2['seats'];
-                for ($i = 0; $i < $total_seats; $i++) {
-                    $count = $count + 1;
-                    $usedseat = "seat" . $count;
-
-                    if (in_array($usedseat, $allSelectedSeatsArray)) {
-                        // echo $usedseat;
-                ?>
-                        <div class="seat">
-                            <input type="checkbox" id="seat<?php echo $count ?>" class="seat-checkbox" disabled>
-                            <label for="seat<?php echo  $count ?>"><?php echo $count ?></label>
-                        </div>
-                    <?php } else { ?>
-                        <div class="seats">
-                            <input type="checkbox" id="seat<?php echo $count ?>" class="seat-checkbox">
-                            <label for="seat<?php echo  $count ?>"><?php echo $count ?></label>
-                        </div>
-                    <?php }
+    <div class="row" style="background:linear-gradient(to top, rgba(0, 0, 0, 0.8)50%, rgba(0, 0, 0, 0.8)50%);">
+        <div class="col-sm-12 col-lg-2 col-md-2"></div>
+        <div class="col-sm-12 col-lg-8 col-md-8" style="align-items:center">
+            <h2>Please Make Sure You Have Selected your Preffered Seat Here</h2>
+            <ul class="showcase">
+                <li>
+                    <div class="seat"></div>
+                    <small>Available</small>
+                </li>
+                <li>
+                    <div class="seat selected"></div>
+                    <small>Selected</small>
+                </li>
+            </ul>
+            <div class="container">
+                <div class="screen" style="text-align:center; color:#ff7200;"><b>SCREEN</b></div>
+                <div class="col-lg-12" style="align-items:center;">
+                    <?php
+                    $total_seats = $data2['seats'];
+                    $number_Of_Rows =ceil($total_seats / 11);
+                    $count = 0;
+                    echo $number_Of_Rows;
+                    for ($i = 0; $i < $number_Of_Rows; $i++) {
                     ?>
-                <?php
-                }
-                ?>
-                <!-- Add more seats as needed -->
+                        <div class="rowk" style="margin-bottom:2px;">
+                            <?php
+                            for ($j = 0; $j <11; $j++) {
+                                $count = $count + 1;
+                                $usedseat = "seat" . $count;
+                                if (in_array($usedseat, $allSelectedSeatsArray)) {
+                            ?>
+                                    <div class="seat selected">
+                                        <input type="checkbox" id="seat<?php echo $count ?>" class="seat-checkbox" disabled>
+                                        <label for="seat<?php echo  $count ?>"><?php echo $count ?></label>
+                                    </div>
+                                <?php } else { ?>
+                                    <div class="seat available">
+                                        <input type="checkbox" id="seat<?php echo $count ?>" class="seat-checkbox">
+                                        <label for="seat<?php echo  $count ?>"><?php echo $count ?></label>
+                                    </div>
+                            <?php
+                                }
+                            }
+                            ?>
+                        </div>
+                    <?php
+                    }
+                    ?>
+                </div>
+
+
+
             </div>
         </div>
-        <div class="col-sm-12 col-lg-6 col-md-6 mt-5">
+    <div class="col-sm-12 col-lg-2 col-md-2"></div>
+    </div>
+    <div class="row" style="background:linear-gradient(to top, rgba(0, 0, 0, 0.8)50%, rgba(0, 0, 0, 0.8)50%);">
+    <div class="col-lg-3 col-md-3"></div>    
+    <div class="col-sm-12 col-lg-6 col-md-6 mt-5">
             <div class="form">
                 <h2>Book Your Tickets</h2>
                 <form action="" method="post">
@@ -271,6 +389,7 @@ session_start();
                 </form>
             </div>
         </div>
+    <div class="col-lg-3 col-md-3"></div>    
     </div>
 
 

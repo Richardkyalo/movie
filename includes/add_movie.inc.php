@@ -59,4 +59,9 @@ class movies {
         $employeetheatre=$employeedetail->get_all_employeedetail($user_id);
         return $employeetheatre;
     }
+    public function getbookedMovies($email){
+        $booked= new add_movie();
+        $bookedRecommendation= $booked->getRecomendations($email);
+        return $bookedRecommendation;
+    }
 }
