@@ -1,7 +1,9 @@
 <?php
+include "action.php";
 ob_start();
 class customer extends database
 {
+
     public function getcustomerDetails($user_id)
     {
         try {
@@ -44,102 +46,112 @@ class customer extends database
     public function book_a_movie($name, $seats, $theatre, $phone, $movie_id)
     {
         try {
-            $sql =$this->connect()->prepare("SELECT charge FROM movies WHERE movie_id=?");
+            $sql = $this->connect()->prepare("SELECT charge FROM movies WHERE movie_id=?");
             $sql->execute([$movie_id]);
-            $charge=$sql->fetch(PDO::FETCH_ASSOC)['charge'];
-            $num_of_tickets = explode(',',$seats);
-            $count=count($num_of_tickets);
-            $totalcharge=$charge*$count;
+            $charge = $sql->fetch(PDO::FETCH_ASSOC)['charge'];
+            $num_of_tickets = explode(',', $seats);
+            $count = count($num_of_tickets);
+            $totalcharge = $charge * $count;
+            $phone_number = '254' . substr($phone, 1);
+
+            $mpesa = new Action();
+            $payment = $mpesa->payment($phone_number, $totalcharge);
+
+            if ($payment->ResponseCode === "0") {
+                $merchant_ID = $payment->MerchantRequestID;
 
 
+                $stmt = $this->connect()->prepare("INSERT INTO bookings(name, seats, theatre, phone, movie_id, amount)
+            VALUES (?, ?, ?, ?, ?, ?)");
+                $stmt->execute([$name, $seats, $theatre, $phone, $movie_id, $totalcharge]);
 
-            $stmt = $this->connect()->prepare("INSERT INTO bookings(name, seats, theatre, phone, movie_id, amount) VALUES (?, ?, ?, ?, ?, ?)");
-            $stmt->execute([$name, $seats, $theatre, $phone, $movie_id,$totalcharge]);
+                if ($stmt) {
+                    $query = $this->connect()->prepare("SELECT * FROM booked_movies WHERE movie_id = ?");
+                    $query->execute([$movie_id]);
 
-            if ($stmt) {
-                $query = $this->connect()->prepare("SELECT * FROM booked_movies WHERE movie_id = ?");
-                $query->execute([$movie_id]);
+                    if ($query->rowCount() > 0) {
+                        $moviedetails = $query->fetch(PDO::FETCH_ASSOC);
+                        $alreadybookedseats = $moviedetails["seats"];
+                        $nowbookedseats = $alreadybookedseats . "," . $seats;
 
-                if ($query->rowCount() > 0) {
-                    $moviedetails = $query->fetch(PDO::FETCH_ASSOC);
-                    $alreadybookedseats = $moviedetails["seats"];
-                    $nowbookedseats = $alreadybookedseats . "," . $seats;
+                        $stm = $this->connect()->prepare("UPDATE booked_movies SET seats = ? WHERE movie_id = ?");
+                        $result = $stm->execute([$nowbookedseats, $movie_id]);
 
-                    $stm = $this->connect()->prepare("UPDATE booked_movies SET seats = ? WHERE movie_id = ?");
-                    $result = $stm->execute([$nowbookedseats, $movie_id]);
+                        if ($result) {
+                            $statement = $this->connect()->prepare("SELECT * FROM movies WHERE movie_id=?");
+                            $statement->execute([$movie_id]);
+                            if ($statement->rowCount() > 0) {
+                                $data = $statement->fetch(PDO::FETCH_ASSOC);
+                                $retrievedamount = $data['charge'];
+                                $date = $data['date'];
+                                $time = $data['time'];
+                                $moviename = $data['movie'];
+                                $selectedSeatsArray = explode(',', $seats);
+                                $numSelectedSeats = count($selectedSeatsArray);
+                                $totalamount = $retrievedamount * $numSelectedSeats;
 
-                    if ($result) {
-                        $statement = $this->connect()->prepare("SELECT * FROM movies WHERE movie_id=?");
-                        $statement->execute([$movie_id]);
-                        if ($statement->rowCount() > 0) {
-                            $data = $statement->fetch(PDO::FETCH_ASSOC);
-                            $retrievedamount = $data['charge'];
-                            $date= $data['date'];
-                            $time=$data['time'];
-                            $moviename=$data['movie'];
-                            $selectedSeatsArray = explode(',', $seats);
-                            $numSelectedSeats = count($selectedSeatsArray);
-                            $totalamount=$retrievedamount*$numSelectedSeats;
-
-                            $data = array(
-                                'name' => $name,
-                                'phone' => $phone,
-                                'movie_id' => $movie_id,
-                                'seats' => $seats,
-                                'totalamount'=>$totalamount,
-                                'date'=>$date,
-                                'time'=>$time,
-                                'moviename'=>$moviename
-                            );
-                            $queryString = http_build_query($data);
-                            header("Location:../views/generateticketpdf.php?" . $queryString);
+                                $data = array(
+                                    'name' => $name,
+                                    'phone' => $phone,
+                                    'movie_id' => $movie_id,
+                                    'seats' => $seats,
+                                    'totalamount' => $totalamount,
+                                    'date' => $date,
+                                    'time' => $time,
+                                    'moviename' => $moviename
+                                );
+                                $queryString = http_build_query($data);
+                                header("Location:../views/generateticketpdf.php?" . $queryString);
+                                $stm = null;
+                                return true;
+                            }
+                        } else {
                             $stm = null;
-                            return true;
+                            throw new PDOException("Failed to update booked seats.");
                         }
                     } else {
-                        $stm = null;
-                        throw new PDOException("Failed to update booked seats.");
+                        $query2 = $this->connect()->prepare("INSERT INTO booked_movies(movie_id, seats) VALUES (?, ?)");
+                        $result2 = $query2->execute([$movie_id, $seats]);
+
+                        if ($result2) {
+
+                            $statement = $this->connect()->prepare("SELECT * FROM movies WHERE movie_id=?");
+                            $statement->execute([$movie_id]);
+                            if ($statement->rowCount() > 0) {
+                                $data = $statement->fetch(PDO::FETCH_ASSOC);
+                                $retrievedamount = $data['charge'];
+                                $date = $data['date'];
+                                $time = $data['time'];
+                                $moviename = $data['movie'];
+                                $selectedSeatsArray = explode(',', $seats);
+                                $numSelectedSeats = count($selectedSeatsArray);
+                                $totalamount = $retrievedamount * $numSelectedSeats;
+
+                                $data = array(
+                                    'name' => $name,
+                                    'phone' => $phone,
+                                    'movie_id' => $movie_id,
+                                    'seats' => $seats,
+                                    'totalamount' => $totalamount,
+                                    'date' => $date,
+                                    'time' => $time,
+                                    'moviename' => $moviename
+                                );
+                                $queryString = http_build_query($data);
+                                header("Location:../views/generateticketpdf.php?" . $queryString);
+                                $stm = null;
+                                return true;
+                            }
+                        } else {
+                            $query2 = null;
+                            throw new PDOException("Failed to insert into booked_movies.");
+                        }
                     }
                 } else {
-                    $query2 = $this->connect()->prepare("INSERT INTO booked_movies(movie_id, seats) VALUES (?, ?)");
-                    $result2 = $query2->execute([$movie_id, $seats]);
-
-                    if ($result2) {
-
-                        $statement = $this->connect()->prepare("SELECT * FROM movies WHERE movie_id=?");
-                        $statement->execute([$movie_id]);
-                        if ($statement->rowCount() > 0) {
-                            $data = $statement->fetch(PDO::FETCH_ASSOC);
-                            $retrievedamount = $data['charge'];
-                            $date= $data['date'];
-                            $time=$data['time'];
-                            $moviename=$data['movie'];
-                            $selectedSeatsArray = explode(',', $seats);
-                            $numSelectedSeats = count($selectedSeatsArray);
-                            $totalamount=$retrievedamount*$numSelectedSeats;
-
-                            $data = array(
-                                'name' => $name,
-                                'phone' => $phone,
-                                'movie_id' => $movie_id,
-                                'seats' => $seats,
-                                'totalamount'=>$totalamount,
-                                'date'=>$date,
-                                'time'=>$time,
-                                'moviename'=>$moviename
-                            );
-                            $queryString = http_build_query($data);
-                            header("Location:../views/generateticketpdf.php?" . $queryString);
-                            $stm = null;
-                            return true;
-                        }
-                    } else {
-                        $query2 = null;
-                        throw new PDOException("Failed to insert into booked_movies.");
-                    }
+                    throw new PDOException("Failed to insert into bookings.");
                 }
             } else {
-                throw new PDOException("Failed to insert into bookings.");
+                echo "Payment request failed.";
             }
         } catch (PDOException $e) {
             error_log("PDOException: " . $e->getMessage());
@@ -150,12 +162,12 @@ class customer extends database
     {
         try {
 
-            $sql =$this->connect()->prepare("SELECT charge FROM movies WHERE movie_id=?");
+            $sql = $this->connect()->prepare("SELECT charge FROM movies WHERE movie_id=?");
             $sql->execute([$movie_id]);
-            $charge=$sql->fetch(PDO::FETCH_ASSOC)['charge'];
-            $num_of_tickets = explode(',',$seats);
-            $count=count($num_of_tickets);
-            $totalcharge=$charge*$count;
+            $charge = $sql->fetch(PDO::FETCH_ASSOC)['charge'];
+            $num_of_tickets = explode(',', $seats);
+            $count = count($num_of_tickets);
+            $totalcharge = $charge * $count;
 
 
 
@@ -181,22 +193,22 @@ class customer extends database
                         if ($statement->rowCount() > 0) {
                             $data = $statement->fetch(PDO::FETCH_ASSOC);
                             $retrievedamount = $data['charge'];
-                            $date= $data['date'];
-                            $time=$data['time'];
-                            $moviename=$data['movie'];
+                            $date = $data['date'];
+                            $time = $data['time'];
+                            $moviename = $data['movie'];
                             $selectedSeatsArray = explode(',', $seats);
                             $numSelectedSeats = count($selectedSeatsArray);
-                            $totalamount=$retrievedamount*$numSelectedSeats;
+                            $totalamount = $retrievedamount * $numSelectedSeats;
 
                             $data = array(
                                 'name' => $name,
                                 'phone' => $phone,
                                 'movie_id' => $movie_id,
                                 'seats' => $seats,
-                                'totalamount'=>$totalamount,
-                                'date'=>$date,
-                                'time'=>$time,
-                                'moviename'=>$moviename
+                                'totalamount' => $totalamount,
+                                'date' => $date,
+                                'time' => $time,
+                                'moviename' => $moviename
                             );
                             $queryString = http_build_query($data);
                             header("Location:../views/generateticketpdf.php?" . $queryString);
@@ -217,22 +229,22 @@ class customer extends database
                         if ($statement->rowCount() > 0) {
                             $data = $statement->fetch(PDO::FETCH_ASSOC);
                             $retrievedamount = $data['charge'];
-                            $date= $data['date'];
-                            $time=$data['time'];
-                            $moviename=$data['movie'];
+                            $date = $data['date'];
+                            $time = $data['time'];
+                            $moviename = $data['movie'];
                             $selectedSeatsArray = explode(',', $seats);
                             $numSelectedSeats = count($selectedSeatsArray);
-                            $totalamount=$retrievedamount*$numSelectedSeats;
+                            $totalamount = $retrievedamount * $numSelectedSeats;
 
                             $data = array(
                                 'name' => $name,
                                 'phone' => $phone,
                                 'movie_id' => $movie_id,
                                 'seats' => $seats,
-                                'totalamount'=>$totalamount,
-                                'date'=>$date,
-                                'time'=>$time,
-                                'moviename'=>$moviename
+                                'totalamount' => $totalamount,
+                                'date' => $date,
+                                'time' => $time,
+                                'moviename' => $moviename
                             );
                             $queryString = http_build_query($data);
                             header("Location:../views/generateticketpdf.php?" . $queryString);

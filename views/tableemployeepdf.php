@@ -2,7 +2,7 @@
 session_start();
 
 // Include DomPDF library
-require_once '../vendor/autoload.php'; 
+require_once '../vendor/autoload.php';
 
 use Dompdf\Dompdf;
 
@@ -34,9 +34,9 @@ if (isset($_SESSION['tableData'])) {
 
     // HTML content with logo, table, and footer
     $htmlContent = '
-        <div style="text-align: center;">
-            <img src="logo.png" alt="Logo" style="width: 200px;">
-        </div>
+    <div style="text-align: center; color:#ff7200">
+    <h3 >RK Movie Theatres: List of Employees</h3>
+ </div>
         <table style="width: 100%; margin-top: 20px;">
             <tbody>' . $pdfData . '</tbody>
             <tfoot>

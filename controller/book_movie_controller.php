@@ -35,7 +35,7 @@ class book_movie_controller extends customer
     public function book_movie()
     {
         if ($this->emptyChecker()==false) {
-            header("Location: " . $this->path . "?error=All fields are required");
+            header("Location:moviebooking.php? error=Please make sure you have fully updated your profile to continue");
             exit();
         }else {
             $this->book_a_movie($this->name, $this->seats, $this->theatre, $this->phone, $this->movie_id);

@@ -365,18 +365,18 @@ session_start();
     <div class="col-sm-12 col-lg-6 col-md-6 mt-5">
             <div class="form">
                 <h2>Book Your Tickets</h2>
-                <form action="" method="post">
+                <form action="" method="post" onsubmit="return validateForm()">
                     <div class="form-group col-lg-12">
                         <label for="name" class="form-group col-lg-12">Your Name:</label><br>
-                        <input type="text" id="name" name="name" value="<?php echo $data['firstname'] ?>" class="form-group col-lg-12" required>
-                    </div>
+                        <input type="text" id="name" class="form-group col-lg-12" name="name" readonly  value="<?php echo !empty($data['firstname']) ? htmlspecialchars($data['firstname']) : ''; ?>" placeholder="<?php echo empty($data['firstname']) ? 'Please update your profile first.' : ''; ?>" >
+   </div>
                     <div class="form-group col-lg-12">
                         <label for="phone" class="form-group col-lg-12">Your Phone Number:</label><br>
-                        <input type="text" id="" class="form-group col-lg-12" name="phone" value="<?php echo $data['phone'] ?>" required>
-                    </div>
+                        <input type="text" id="phone" class="form-group col-lg-12" name="phone" readonly value="<?php echo !empty($data['phone']) ? htmlspecialchars($data['phone']) : ''; ?>" placeholder="<?php echo empty($data['phone']) ? 'Please update your profile first.' : ''; ?>" >
+                      </div>
                     <div class="form-group col-lg-12">
                         <label for="theatre" class="form-group col-lg-12">Theatre:</label><br>
-                        <input type="text" id="theatre" name="theatre" value="<?php echo $data1['theatre'] ?>" class="form-group col-lg-12" required>
+                        <input type="text" id="theatre" readonly name="theatre" value="<?php echo $data1['theatre'] ?>" class="form-group col-lg-12" required>
                     </div>
                     <div class="form-group col-lg-12">
                         <label for="selected_seats" class="form-group col-lg-12">Select Seats:</label>
@@ -401,6 +401,26 @@ session_start();
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     <script src="./js/bootstrap.bundle.js"></script>
+    <script>
+    // Function to validate form fields
+    function validateForm() {
+        // Get form inputs
+        var name = document.getElementById("name").value;
+        var phone = document.getElementById("phone").value;
+        var theatre = document.getElementById("theatre").value;
+        var selectedSeats = document.getElementById("selected_seats").value;
+
+        // Check if any of the fields are empty
+        if (name === "" || phone === "" || theatre === "" || selectedSeats.length === 0) {
+            // Alert the user and prevent form submission
+            alert("Please fill in all fields, Or make sure you have Updated Your Profile");
+            return false;
+        }
+        // If all fields are filled, allow form submission
+        return true;
+    }
+</script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Get all seat checkboxes
