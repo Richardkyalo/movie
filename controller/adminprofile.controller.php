@@ -40,6 +40,15 @@ class Adminprofile_controller extends adminprofile {
         return $response;
     }
 
+    private function filterPhone(){
+        $response="";
+        if (substr($this->phone, 0, 1) === '0' && strlen($this->phone) === 10) {
+            $response=true;
+        } else {
+            $response=false;
+        }
+        return $response;
+    }
     private function emptyChecker(){
         $response= "";
         if(empty($this->firstname)||empty( $this->secondname)||empty( $this->address)||empty($this->town)
@@ -76,6 +85,10 @@ class Adminprofile_controller extends adminprofile {
     }
 
     public function updateUser(){
+        if($this->filterPhone()==false){
+            header("Location:./adminprofile.php? error=invalid Phone number");
+            exit();
+        }
         if($this->emptyChecker()==false){
             header("Location:./adminprofile.php? error= all fields are required");
             exit();

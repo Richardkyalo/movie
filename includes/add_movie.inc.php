@@ -64,4 +64,9 @@ class movies {
         $bookedRecommendation= $booked->getRecomendations($email);
         return $bookedRecommendation;
     }
+    public function totalBookings(){
+        $total=new add_movie();
+        $totalSeats=$total->bookings();
+        return $totalSeats;
+    }
 }

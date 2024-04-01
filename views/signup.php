@@ -66,9 +66,10 @@
         <div class="row">
             <div class="col-lg-4 col-md-4 col-sm-12"></div>
             <div class="col-lg-4 col-md-4 col-sm-12 mt-5 form-outline">
-                <form action="" method="post">
+                <form action="" method="post" >
                     <div class="form">
                         <h2>SIGNUP</h2> <br>
+                        <div id="message" style="display: none; color: red;"></div>
                         <div>
                             <p style="color:#ff7200;">*<?= $error ?></p>
                         </div>
@@ -79,7 +80,6 @@
                             <input name="email" type="text" value="" class="input form-control" id="username" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1" />
                         </div>
                         <div>
-                            <p style="color:#ff7200;">*<?= $error ?></p>
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -94,7 +94,6 @@
                             </div>
                         </div><br>
                         <div>
-                            <p style="color:#ff7200;">*<?= $error ?></p>
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">

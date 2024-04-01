@@ -30,9 +30,23 @@ class signup_controller extends signup{
         return $response;
 
     }
-    private function passwordChecker(){
+    private  function passwordLength(){
+        $length = strlen($this->password);
         $response="";
-        if(!preg_match("/^[a-zA-Z0-9]*$/",$this->password)){
+        if ($length < 8 || $length > 20) {
+            $response=false;
+        }else{
+            $response=true;
+        }
+        return $response;
+    }
+    private function passwordStrength(){
+        $uppercase = preg_match('/[A-Z]/', $this->password);
+        $lowercase = preg_match('/[a-z]/', $this->password);
+        $number = preg_match('/[0-9]/', $this->password);
+        $specialChars = preg_match('/[^\w\s]/', $this->password);
+        $response="";
+        if (!$uppercase || !$lowercase || !$number || !$specialChars) {
             $response=false;
         }else{
             $response=true;
@@ -63,12 +77,16 @@ class signup_controller extends signup{
             header("Location:./signup.php? error= all fields are required");
             exit();
         }
-        if($this->emailFilter()==false){
-            header("Location:./signup.php? error= invalid email");
+        if($this->passwordLength()==false){
+            header("Location:./signup.php? error=Password must be atleast 8 characters long");
             exit();
         }
-       if($this->passwordChecker()==false){
-            header("Location:./signup.php? error= invalid password");
+        if($this->passwordStrength()==false){
+            header("Location:./signup.php? error=Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.");
+            exit();
+        }
+        if($this->emailFilter()==false){
+            header("Location:./signup.php? error= invalid email");
             exit();
         }if($this->confirmPassword()==false){
             header("Location:./signup.php? error= Password mismatch");

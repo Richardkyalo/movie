@@ -36,6 +36,7 @@
                 $data = new movies();
                 $email = $_SESSION['email'];
                 $movies = $data->get_movies();
+                $seats=$data->totalBookings();
                 $error = "";
                 if (isset($_GET['error'])) {
                     $error = $_GET['error'];
@@ -47,6 +48,7 @@
                     exit();
                 }
                 $_SESSION['tableData'] = serialize($movies);
+                $_SESSION['booked']=serialize($seats);
                 ?>
             </div>
         </div>
@@ -152,7 +154,48 @@
                             </tr>
                 </table>
                 <!-- Your table code remains the same -->
+                <table class="table table-hover table-bordered caption-top">
+                    <caption style="color:#ff7200; font-family:'Times New Roman', Times, serif; font-weight:bold; font-size:30px;">List of Movies Booked</caption>
+                    <thead>
 
+                        <tr>
+                            <th style="text-align: right;">SERIAL NUMBER</th>
+                            <th>MOVIE NAME</th>
+                            <th>NUMBER OF BOOKINGS</th>
+                            <th>TOTAL AMOUNT PAID TO ACCOUNT</th>
+                        </tr>
+                    </thead>
+                    <?php
+                                        if (!empty($seats)) {
+                                            $count = 0;
+                                            foreach ($seats as $movie_name => $data) {
+                                                $charge = $data['charge'];
+                                                $total_booked_seats = $data['total_booked_seats'];
+                                                $charges=$charge*$total_booked_seats;
+                                            
+                                        
+                              
+                   ?>
+                            <tr>
+                                <td style="text-align: right;">
+                                    <?php $count = $count + 1;
+                                    echo $count;
+                                    ?>
+                                </td>
+                                <td><?php echo $movie_name ?></td>
+                                <td><?php echo $total_booked_seats ?></td>
+                                <td><?php echo $charges ?></td>
+<?php
+                                            }
+                                        }else{
+                                            $error = 'No Bookings found'; ?>
+                                            <p style="color:#ff7200;">*<?= $error ?></p>
+                                        <?php
+
+                                        }
+?>
+                            </tr>
+                </table>
                 <!-- Modal for Update -->
                 <div class="modal" id="updateModal">
                     <div class="modal-dialog">

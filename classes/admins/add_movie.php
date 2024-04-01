@@ -106,6 +106,44 @@ class add_movie extends database
 
         return $result;
     }
+    public function bookings() {
+        $sql = $this->connect()->prepare("SELECT movie_id, seats FROM booked_movies");
+        $sql->execute();
+        $counts = array();
+    
+        if ($sql->rowCount() > 0) {
+            $rows = $sql->fetchAll(PDO::FETCH_ASSOC);
+    
+            foreach ($rows as $row) {
+                $movie_id = $row['movie_id'];
+    
+                // Retrieve the movie name and charge from the movies table using movie_id
+                $stmt = $this->connect()->prepare("SELECT movie, charge FROM movies WHERE movie_id = ?");
+                $stmt->execute([$movie_id]);
+                $movie_data = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+                $movie_name = $movie_data['movie'];
+                $charge = $movie_data['charge'];
+    
+                $seats = explode(',', $row['seats']);
+    
+                if (!isset($counts[$movie_name])) {
+                    $counts[$movie_name] = array(
+                        'charge' => $charge,
+                        'total_booked_seats' => 0
+                    );
+                }
+    
+                $counts[$movie_name]['total_booked_seats'] += count($seats);
+            }
+        } else {
+            echo "No bookings found.";
+        }
+    
+        return $counts;
+    }
+    
+    
     public function deleteMovie($movie)
     {
         $stmt = $this->connect()->prepare("DELETE FROM movies WHERE movie = ?");
