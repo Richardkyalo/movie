@@ -36,7 +36,7 @@
                 $data = new movies();
                 $email = $_SESSION['email'];
                 $movies = $data->get_movies();
-                $seats=$data->totalBookings();
+                $seats = $data->totalBookings();
                 $error = "";
                 if (isset($_GET['error'])) {
                     $error = $_GET['error'];
@@ -48,7 +48,7 @@
                     exit();
                 }
                 $_SESSION['tableData'] = serialize($movies);
-                $_SESSION['booked']=serialize($seats);
+                $_SESSION['booked'] = serialize($seats);
                 ?>
             </div>
         </div>
@@ -81,7 +81,7 @@
                     <div class="input-group mb-3">
                         <button class="btn bt btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Download</button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="tablemoviecsv.php">CSV FILE</a></li>
+                            <!-- <li><a class="dropdown-item" href="tablemoviecsv.php">CSV FILE</a></li> -->
                             <li><a class="dropdown-item" href="tablemoviepdf.php">PDF Format</a></li>
                         </ul>
                     </div>
@@ -166,16 +166,16 @@
                         </tr>
                     </thead>
                     <?php
-                                        if (!empty($seats)) {
-                                            $count = 0;
-                                            foreach ($seats as $movie_name => $data) {
-                                                $charge = $data['charge'];
-                                                $total_booked_seats = $data['total_booked_seats'];
-                                                $charges=$charge*$total_booked_seats;
-                                            
-                                        
-                              
-                   ?>
+                    if (!empty($seats)) {
+                        $count = 0;
+                        foreach ($seats as $movie_name => $data) {
+                            $charge = $data['charge'];
+                            $total_booked_seats = $data['total_booked_seats'];
+                            $charges = $charge * $total_booked_seats;
+
+
+
+                    ?>
                             <tr>
                                 <td style="text-align: right;">
                                     <?php $count = $count + 1;
@@ -185,15 +185,15 @@
                                 <td><?php echo $movie_name ?></td>
                                 <td><?php echo $total_booked_seats ?></td>
                                 <td><?php echo $charges ?></td>
-<?php
-                                            }
-                                        }else{
-                                            $error = 'No Bookings found'; ?>
-                                            <p style="color:#ff7200;">*<?= $error ?></p>
-                                        <?php
+                            <?php
+                        }
+                    } else {
+                        $error = 'No Bookings found'; ?>
+                            <p style="color:#ff7200;">*<?= $error ?></p>
+                        <?php
 
-                                        }
-?>
+                    }
+                        ?>
                             </tr>
                 </table>
                 <!-- Modal for Update -->

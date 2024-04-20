@@ -11,7 +11,7 @@
                 <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="customers.php">CUSTOMERS</a></li>
                 <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="admintheatres.php">THEATRES</a></li>
                 <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="adminmovies.php">MOVIES</a></li>
-                <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="reports.php">REPORTS</a></li>
+                <!-- <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="reports.php">REPORTS</a></li> -->
                 <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="adminprofile.php">PROFILE</a></li>
                 <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="logout.php">LOGOUT</a></li>
                 <!-- <li class="nav-item"><a class="nav-link" style="color: #ff7200;" href="#">CONTACT</a></li>
